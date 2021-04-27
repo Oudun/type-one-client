@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -23,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecordsActivity extends AppCompatActivity {
+public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +40,27 @@ public class RecordsActivity extends AppCompatActivity {
     }
 
     private void getRecords() {
-        List<JSONObject> result = new ArrayList<>();
-        String url = "http://192.168.0.191:8000/api/records/";
-        JSONObject object = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, object,
+        Log.d("REST", "Getting records");
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest (
+                Request.Method.GET, BASE_URL.concat("/api/records/"), null,
                 response -> {
                     try {
-                        JSONArray jarray = response.getJSONArray("records");
+                        Log.d("REST", "Records retrieved");
+                        JSONArray jarray = new JSONArray(response.toString());
+                        List<JSONObject> result = new ArrayList<>();
                         for (int i=0; i<jarray.length(); i ++) {
                             result.add(jarray.getJSONObject(i));
                         }
+                        fillRecords(result);
                     } catch (Exception e) {
                         Log.e("REST", e.getMessage());
                     }
                 },
-                error -> Log.e("REST", error.toString())
+                errorListener
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 String accessToken = getApplicationContext()
                         .getSharedPreferences("JWT", MODE_PRIVATE)
                         .getString("access", null);
@@ -65,14 +68,13 @@ public class RecordsActivity extends AppCompatActivity {
                 return params;
             }
         };
-
-        Volley.newRequestQueue(getApplicationContext()).add(jsonObjectRequest);
+        Volley.newRequestQueue(RecordsActivity.this).add(jsonObjectRequest);
     }
 
     private void fillRecords(List<JSONObject> list) {
         ListView records = findViewById(R.id.records);
         ArrayAdapter<JSONObject> arrayAdapter =
-                new ArrayAdapter<JSONObject>(this,android.R.layout.simple_list_item_1, list);
+                new ArrayAdapter<JSONObject>(this, R.layout.item, list);
         records.setAdapter(arrayAdapter);
     }
 

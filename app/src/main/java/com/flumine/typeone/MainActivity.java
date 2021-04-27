@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     Handler handler;
 
@@ -33,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getApplicationContext()
                 .getSharedPreferences("JWT", MODE_PRIVATE);
         if (preferences.getString("access", null) == null) {
+            Log.d("REST", "Access key present, redirecting to records list");
             Intent i = new Intent(this, LoginActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(i);
         } else {
+            Log.d("REST", "Access key missing, redirecting to login screen");
             Intent i = new Intent(this, RecordsActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(i);
@@ -45,13 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void connect(View view) throws Exception {
 
-        String url = "http://192.168.0.191:8000/api/token/";
-
         JSONObject object = new JSONObject();
         object.put("username", "admin");
         object.put("password", "admin");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-            Request.Method.POST, url, object,
+            Request.Method.POST, BASE_URL.concat("/api/token/"), object,
             response -> {
                 try {
                     SharedPreferences pref =

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TypeOne</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="title_records">Records</string>
+    <string name="title_login">Login</string>
 </resources>

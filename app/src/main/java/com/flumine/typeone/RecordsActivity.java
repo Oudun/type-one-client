@@ -3,10 +3,15 @@ package com.flumine.typeone;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,10 +32,13 @@ import java.util.Map;
 
 public class RecordsActivity extends BaseActivity {
 
+    ListView recordsView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
+        recordsView = findViewById(R.id.records);
     }
 
     @Override
@@ -41,17 +49,14 @@ public class RecordsActivity extends BaseActivity {
 
     private void getRecords() {
         Log.d("REST", "Getting records");
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest (
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.GET, BASE_URL.concat("/api/records/"), null,
                 response -> {
                     try {
                         Log.d("REST", "Records retrieved");
                         JSONArray jarray = new JSONArray(response.toString());
-                        List<JSONObject> result = new ArrayList<>();
-                        for (int i=0; i<jarray.length(); i ++) {
-                            result.add(jarray.getJSONObject(i));
-                        }
-                        fillRecords(result);
+                        recordsView.setAdapter(
+                                new JSONAdapter(RecordsActivity.this, jarray));
                     } catch (Exception e) {
                         Log.e("REST", e.getMessage());
                     }
@@ -64,18 +69,50 @@ public class RecordsActivity extends BaseActivity {
                 String accessToken = getApplicationContext()
                         .getSharedPreferences("JWT", MODE_PRIVATE)
                         .getString("access", null);
-                params.put("Authorization", "Bearer "+ accessToken);
+                params.put("Authorization", "Bearer " + accessToken);
                 return params;
             }
         };
         Volley.newRequestQueue(RecordsActivity.this).add(jsonObjectRequest);
     }
 
-    private void fillRecords(List<JSONObject> list) {
-        ListView records = findViewById(R.id.records);
-        ArrayAdapter<JSONObject> arrayAdapter =
-                new ArrayAdapter<JSONObject>(this, R.layout.item, list);
-        records.setAdapter(arrayAdapter);
+    public void refresh(View view) {
+        getRecords();
+    }
+
+}
+
+class JSONAdapter extends BaseAdapter implements ListAdapter {
+
+    JSONArray array;
+    Activity activity;
+
+    public JSONAdapter(Activity activity, JSONArray array) {
+        this.array = array;
+        this.activity = activity;
+    }
+
+    @Override
+    public int getCount() {
+        return array.length();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return array.optJSONObject(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        JSONObject jsonObject = (JSONObject)getItem(position);
+        return jsonObject.optLong("id");
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null)
+            convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
+        return convertView;
     }
 
 }

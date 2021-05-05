@@ -5,4 +5,5 @@
     <string name="title_records">Records</string>
     <string name="title_login">Login</string>
     <string name="to_refresh_records_list">to refresh records list</string>
+    <string name="login">Login</string>
 </resources>

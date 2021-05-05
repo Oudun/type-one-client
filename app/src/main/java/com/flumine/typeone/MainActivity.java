@@ -45,28 +45,4 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void connect(View view) throws Exception {
-
-        JSONObject object = new JSONObject();
-        object.put("username", "admin");
-        object.put("password", "admin");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-            Request.Method.POST, BASE_URL.concat("/api/token/"), object,
-            response -> {
-                try {
-                    SharedPreferences pref =
-                            getApplicationContext().getSharedPreferences("JWT", MODE_PRIVATE);
-                    pref.edit().putString("access", response.getString("access")).apply();
-                    pref.edit().putString("refresh", response.getString("refresh")).apply();
-                } catch (Exception e) {
-                    Log.e("REST", e.getMessage());
-                }
-            },
-            error -> ((TextView)findViewById(R.id.text))
-                    .setText(String.format("Error getting response: %s", error.toString()))
-        );
-        Volley.newRequestQueue(getApplicationContext()).add(jsonObjectRequest);
-
-    }
-
 }

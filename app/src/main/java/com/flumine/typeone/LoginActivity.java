@@ -35,8 +35,8 @@ public class LoginActivity extends BaseActivity {
     public void login(View view) throws Exception {
 
         JSONObject object = new JSONObject();
-        object.put("username", findViewById(R.id.username));
-        object.put("password", findViewById(R.id.password));
+        object.put("username", ((TextView) findViewById(R.id.username)).getText());
+        object.put("password", ((TextView) findViewById(R.id.password)).getText());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, BASE_URL.concat("/api/token/"), object,
                 response -> {
@@ -50,8 +50,7 @@ public class LoginActivity extends BaseActivity {
                         Log.e("REST", e.getMessage());
                     }
                 },
-                error -> ((TextView)findViewById(R.id.text))
-                        .setText(String.format("Error getting response: %s", error.toString()))
+                error -> {Log.e("REST", error.toString());}
         );
         Volley.newRequestQueue(getApplicationContext()).add(jsonObjectRequest);
 

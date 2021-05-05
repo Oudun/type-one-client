@@ -2,8 +2,10 @@ package com.flumine.typeone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.GridLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,8 +45,8 @@ public class RecordsActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         getRecords();
     }
 
@@ -112,6 +115,16 @@ class JSONAdapter extends BaseAdapter implements ListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
             convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
+        JSONObject record = (JSONObject) getItem(position);
+        try {
+            GridLayout grid = (GridLayout) (((ConstraintLayout) convertView).getChildAt(0));
+            ((TextView)grid.findViewById(R.id.date_string)).setText(record.getString("time"));
+            ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
+            ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
+            ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin"));
+        } catch (Exception e) {
+            Log.e("REST", e.getLocalizedMessage());
+        }
         return convertView;
     }
 

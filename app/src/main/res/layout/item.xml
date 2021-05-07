@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout -->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="match_parent"-->
@@ -9,104 +8,75 @@
     <GridLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="5"
-        android:rowCount="3"
-        android:background="#FFFF00">
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:columnCount="6">
 
         <TextView
             android:id="@+id/date_string"
-            android:layout_rowWeight="1"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="#FFFFFF"
+            android:layout_columnWeight="1"
             android:ellipsize="end"/>
 
         <TextView
-            android:layout_rowWeight="1"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:background="#FFFFFF"
-            android:text="Апидра"/>
+            android:layout_columnWeight="0.5" />
 
         <TextView
-            android:layout_rowWeight="1"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:background="#FFFFFF"
-            android:text="Сахар"/>
+            android:text="Апидра"
+            android:layout_columnWeight="1" />
 
         <TextView
-            android:layout_rowWeight="1"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:background="#FFFFFF"
-            android:text="ХЕ"/>
+            android:text="Сахар"
+            android:layout_columnWeight="1"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="ХЕ"
+            android:layout_columnWeight="1"/>
 
         <ImageView
             android:id="@+id/meal_img"
-            android:layout_rowWeight="1"
-            android:layout_height="100dp"
-            android:layout_width="100dp"
-            android:background="#FFFFFF"
-            android:layout_rowSpan="3"/>
-
-
+            android:layout_rowSpan="2"
+            android:layout_height="100sp"
+            android:layout_width="100sp"
+            android:layout_columnWeight="1"/>
 
         <TextView
-            android:background="#FFFFFF"
+            android:id="@+id/time_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_columnWeight="1"
+            android:ellipsize="end"/>
 
         <TextView
-            android:background="#FFFFFF"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="0.5" />
+
+        <TextView
             android:id="@+id/shot_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_columnWeight="1" />
 
         <TextView
-            android:background="#FFFFFF"
             android:id="@+id/gluc_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_columnWeight="1"/>
 
         <TextView
-            android:background="#FFFFFF"
             android:id="@+id/bread_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
-
-
-
-
-        <TextView
-            android:background="#FFFFFF"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
-        <TextView
-            android:background="#FFFFFF"
-            android:id="@+id/notes"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="100"
-            android:scrollHorizontally="false"/>
-
-        <TextView
-            android:background="#FFFFFF"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
-        <TextView
-            android:background="#FFFFFF"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
+            android:layout_columnWeight="1"
+            android:layout_gravity="start"/>
 
     </GridLayout>
 

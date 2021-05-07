@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +33,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import android.util.Base64;
 
@@ -49,6 +53,7 @@ public class RecordsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
         recordsView = findViewById(R.id.records);
+        getRecords();
     }
 
     @Override
@@ -124,17 +129,19 @@ class JSONAdapter extends BaseAdapter implements ListAdapter {
             convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
         JSONObject record = (JSONObject) getItem(position);
         try {
-
-            GridLayout grid = (GridLayout) (((ConstraintLayout) convertView).getChildAt(0));
-            ((TextView)grid.findViewById(R.id.date_string)).setText(record.getString("time"));
+            GridLayout grid = (GridLayout) convertView;
+            String dateTime = record.getString("time");
+            Object[] dateParts = new MessageFormat("{0} {1} {2}").parse(dateTime);
+            ((TextView)grid.findViewById(R.id.date_string)).setText(dateParts[0]+" "+dateParts[1]);
+            ((TextView)grid.findViewById(R.id.time_string)).setText((String)dateParts[2]);
             ((TextView)grid.findViewById(R.id.bread_string))
                     .setText(record.getString("bread_units"));
             ((TextView)grid.findViewById(R.id.gluc_string))
                     .setText(record.getString("glucose_level"));
             ((TextView)grid.findViewById(R.id.shot_string))
                     .setText(record.getString("insulin"));
-            ((TextView)grid.findViewById(R.id.notes))
-                    .setText(record.getString("notes"));
+//            ((TextView)grid.findViewById(R.id.notes))
+//                    .setText(record.getString("notes"));
             JSONArray photos = record.getJSONArray("photos");
             if (photos.length()>0) {
                 String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
@@ -144,16 +151,19 @@ class JSONAdapter extends BaseAdapter implements ListAdapter {
                         .setImageBitmap(bitmap);
             }
 
-//            LinearLayout layout = (LinearLayout) (((ConstraintLayout) convertView).getChildAt(0));
+
+
+
+//            GridLayout layout = (GridLayout) convertView;
 //            ((TextView)layout.findViewById(R.id.date_string)).setText(record.getString("time"));
-////            ((TextView)grid.findViewById(R.id.bread_string))
-////                    .setText(record.getString("bread_units").concat("ХЕ"));
-////            ((TextView)grid.findViewById(R.id.gluc_string))
-////                    .setText(record.getString("glucose_level"));
-////            ((TextView)grid.findViewById(R.id.shot_string))
-////                    .setText(record.getString("insulin"));
-////            ((TextView)grid.findViewById(R.id.notes))
-////                    .setText(record.getString("notes"));
+//            ((TextView)layout.findViewById(R.id.bread_string))
+//                    .setText(record.getString("bread_units").concat("ХЕ"));
+//            ((TextView)layout.findViewById(R.id.gluc_string))
+//                    .setText(record.getString("glucose_level"));
+//            ((TextView)layout.findViewById(R.id.shot_string))
+//                    .setText(record.getString("insulin"));
+//            ((TextView)layout.findViewById(R.id.notes))
+//                    .setText(record.getString("notes"));
 //            JSONArray photos = record.getJSONArray("photos");
 //            if (photos.length()>0) {
 //                String rawImage = ((JSONObject)photos.get(0)).getString("thumb");

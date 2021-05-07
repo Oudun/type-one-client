@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,9 +33,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import android.util.Base64;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class RecordsActivity extends BaseActivity {
 
@@ -117,11 +124,47 @@ class JSONAdapter extends BaseAdapter implements ListAdapter {
             convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
         JSONObject record = (JSONObject) getItem(position);
         try {
+
             GridLayout grid = (GridLayout) (((ConstraintLayout) convertView).getChildAt(0));
             ((TextView)grid.findViewById(R.id.date_string)).setText(record.getString("time"));
-            ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
-            ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
-            ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin"));
+            ((TextView)grid.findViewById(R.id.bread_string))
+                    .setText(record.getString("bread_units"));
+            ((TextView)grid.findViewById(R.id.gluc_string))
+                    .setText(record.getString("glucose_level"));
+            ((TextView)grid.findViewById(R.id.shot_string))
+                    .setText(record.getString("insulin"));
+            ((TextView)grid.findViewById(R.id.notes))
+                    .setText(record.getString("notes"));
+            JSONArray photos = record.getJSONArray("photos");
+            if (photos.length()>0) {
+                String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
+                byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                ((ImageView)grid.findViewById(R.id.meal_img))
+                        .setImageBitmap(bitmap);
+            }
+
+//            LinearLayout layout = (LinearLayout) (((ConstraintLayout) convertView).getChildAt(0));
+//            ((TextView)layout.findViewById(R.id.date_string)).setText(record.getString("time"));
+////            ((TextView)grid.findViewById(R.id.bread_string))
+////                    .setText(record.getString("bread_units").concat("ХЕ"));
+////            ((TextView)grid.findViewById(R.id.gluc_string))
+////                    .setText(record.getString("glucose_level"));
+////            ((TextView)grid.findViewById(R.id.shot_string))
+////                    .setText(record.getString("insulin"));
+////            ((TextView)grid.findViewById(R.id.notes))
+////                    .setText(record.getString("notes"));
+//            JSONArray photos = record.getJSONArray("photos");
+//            if (photos.length()>0) {
+//                String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
+//                byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+//                ((ImageView)layout.findViewById(R.id.meal_img))
+//                        .setImageBitmap(bitmap);
+//            }
+
+
+
         } catch (Exception e) {
             Log.e("REST", e.getLocalizedMessage());
         }

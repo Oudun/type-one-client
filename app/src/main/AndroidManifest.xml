@@ -17,7 +17,8 @@
         android:theme="@style/Theme.TypeOne"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".RecordActivity"></activity>
+        <activity android:name=".BaseActivity" />
         <activity
             android:name=".RecordsActivity"
             android:label="@string/title_records" />

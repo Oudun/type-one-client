@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <EditText
+        <TextView
             android:id="@+id/error"
             android:textColor="@color/design_default_color_error"
             android:layout_width="match_parent"
@@ -50,6 +50,5 @@
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

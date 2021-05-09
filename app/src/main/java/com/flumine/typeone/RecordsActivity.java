@@ -7,12 +7,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
@@ -53,6 +55,14 @@ public class RecordsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
         recordsView = findViewById(R.id.records);
+        recordsView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(this, RecordActivity.class);
+            intent.putExtra("RECORD_ID", (int)id);
+            Log.d("INTENT", String.valueOf(id));
+            Log.d("INTENT", String.valueOf(intent.getIntExtra("RECORD_ID", 0)));
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        });
         getRecords();
     }
 
@@ -95,90 +105,70 @@ public class RecordsActivity extends BaseActivity {
         getRecords();
     }
 
-}
+    class JSONAdapter extends BaseAdapter implements ListAdapter {
 
-class JSONAdapter extends BaseAdapter implements ListAdapter {
+        JSONArray array;
+        Activity activity;
 
-    JSONArray array;
-    Activity activity;
-
-    public JSONAdapter(Activity activity, JSONArray array) {
-        this.array = array;
-        this.activity = activity;
-    }
-
-    @Override
-    public int getCount() {
-        return array.length();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return array.optJSONObject(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        JSONObject jsonObject = (JSONObject)getItem(position);
-        return jsonObject.optLong("id");
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
-        JSONObject record = (JSONObject) getItem(position);
-        try {
-            GridLayout grid = (GridLayout) convertView;
-            String dateTime = record.getString("time");
-            Object[] dateParts = new MessageFormat("{0} {1} {2}").parse(dateTime);
-            ((TextView)grid.findViewById(R.id.date_string)).setText(dateParts[0]+" "+dateParts[1]);
-            ((TextView)grid.findViewById(R.id.time_string)).setText((String)dateParts[2]);
-            ((TextView)grid.findViewById(R.id.bread_string))
-                    .setText(record.getString("bread_units"));
-            ((TextView)grid.findViewById(R.id.gluc_string))
-                    .setText(record.getString("glucose_level"));
-            ((TextView)grid.findViewById(R.id.shot_string))
-                    .setText(record.getString("insulin"));
-//            ((TextView)grid.findViewById(R.id.notes))
-//                    .setText(record.getString("notes"));
-            JSONArray photos = record.getJSONArray("photos");
-            if (photos.length()>0) {
-                String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
-                byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                ((ImageView)grid.findViewById(R.id.meal_img))
-                        .setImageBitmap(bitmap);
-            }
-
-
-
-
-//            GridLayout layout = (GridLayout) convertView;
-//            ((TextView)layout.findViewById(R.id.date_string)).setText(record.getString("time"));
-//            ((TextView)layout.findViewById(R.id.bread_string))
-//                    .setText(record.getString("bread_units").concat("ХЕ"));
-//            ((TextView)layout.findViewById(R.id.gluc_string))
-//                    .setText(record.getString("glucose_level"));
-//            ((TextView)layout.findViewById(R.id.shot_string))
-//                    .setText(record.getString("insulin"));
-//            ((TextView)layout.findViewById(R.id.notes))
-//                    .setText(record.getString("notes"));
-//            JSONArray photos = record.getJSONArray("photos");
-//            if (photos.length()>0) {
-//                String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
-//                byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
-//                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-//                ((ImageView)layout.findViewById(R.id.meal_img))
-//                        .setImageBitmap(bitmap);
-//            }
-
-
-
-        } catch (Exception e) {
-            Log.e("REST", e.getLocalizedMessage());
+        public JSONAdapter(Activity activity, JSONArray array) {
+            this.array = array;
+            this.activity = activity;
         }
-        return convertView;
+
+        @Override
+        public int getCount() {
+            return array.length();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return array.optJSONObject(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            JSONObject jsonObject = (JSONObject)getItem(position);
+            return jsonObject.optLong("id");
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
+            JSONObject record = (JSONObject) getItem(position);
+            try {
+                GridLayout grid = (GridLayout) convertView;
+                String dateTime = record.getString("time");
+                Object[] dateParts = new MessageFormat("{0} {1} {2}").parse(dateTime);
+                ((TextView)grid.findViewById(R.id.date_string)).setText(dateParts[0]+" "+dateParts[1]);
+                ((TextView)grid.findViewById(R.id.time_string)).setText((String)dateParts[2]);
+                ((TextView)grid.findViewById(R.id.bread_string))
+                        .setText(record.getString("bread_units"));
+                ((TextView)grid.findViewById(R.id.shot_string)).setText("TEST");
+                JSONObject insulin = record.getJSONObject("insulin");
+                int inslulinNameId = getResources().getIdentifier(insulin.getString("name"),
+                        "string", "com.flumine.typeone");
+                ((TextView)grid.findViewById(R.id.insulin_name))
+                        .setText(getResources().getString(inslulinNameId));
+                ((TextView)grid.findViewById(R.id.shot_string))
+                        .setText(record.getString("insulin_amount"));
+                ((TextView)grid.findViewById(R.id.gluc_string))
+                        .setText(record.getString("glucose_level"));
+                JSONArray photos = record.getJSONArray("photos");
+                if (photos.length()>0) {
+                    String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
+                    byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    ((ImageView)grid.findViewById(R.id.meal_img))
+                            .setImageBitmap(bitmap);
+                }
+            } catch (Exception e) {
+                Log.e("REST", e.getLocalizedMessage());
+            }
+            return convertView;
+        }
+
     }
 
 }
+

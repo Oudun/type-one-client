@@ -3,9 +3,13 @@ package com.flumine.typeone;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,7 +69,17 @@ public class RecordActivity extends BaseActivity {
                 .setText(response.getString("glucose_level"));
         ((TextView)findViewById(R.id.bread_string))
                 .setText(response.getString("bread_units"));
+        JSONArray photos = response.getJSONArray("photos");
+        if (photos.length()>0) {
+            String rawImage = ((JSONObject)photos.get(0)).getString("data");
+            byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            ((ImageView)findViewById(R.id.preview))
+                    .setImageBitmap(bitmap);
+        }
         Log.d("REST", "Record retrieved");
+        findViewById(R.id.timer).setVisibility(View.GONE);
+        findViewById(R.id.layout).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -76,6 +90,12 @@ public class RecordActivity extends BaseActivity {
 
     public void updateRecord(View view) {
         getRecord();
+    }
+
+    public void addPhoto(View view) {
+        Intent intent = new Intent(this, PhotoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 
 }

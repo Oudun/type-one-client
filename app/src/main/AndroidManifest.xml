@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -17,8 +16,13 @@
         android:theme="@style/Theme.TypeOne"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".RecordActivity"></activity>
         <activity android:name=".BaseActivity" />
+        <activity
+            android:name=".PhotoActivity"
+            android:label="@string/foto" />
+        <activity
+            android:name=".RecordActivity"
+            android:label="@string/record" />
         <activity
             android:name=".RecordsActivity"
             android:label="@string/title_records" />
@@ -28,7 +32,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -31,7 +31,6 @@ public class LoginActivity extends BaseActivity {
         Log.d("REST", "redirected to login");
     }
 
-
     public void login(View view) throws Exception {
 
         JSONObject object = new JSONObject();

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10sp"
     tools:context=".RecordActivity">
 
     <ProgressBar
@@ -17,6 +17,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5sp"
         android:orientation="vertical">
 
         <TextView
@@ -102,8 +103,11 @@
         android:contentDescription="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:onClick="updateRecord"
+        android:layout_gravity="bottom|start"
+        android:onClick="addPhoto"
+        android:layout_margin="@dimen/fab_margin"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_baseline_camera_alt_24"
         tools:ignore="RtlHardcoded" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -111,8 +115,11 @@
         android:contentDescription="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:onClick="addPhoto"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:onClick="updateRecord"
+        app:srcCompat="@drawable/ic_baseline_save_24"
+        android:tint="@color/white"
         tools:ignore="RtlHardcoded" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -24,6 +24,7 @@ import java.util.Map;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected static final String BASE_URL = "http://192.168.0.191:8000";
+    //protected static final String BASE_URL = "https://type-one.herokuapp.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         SharedPreferences pref =
                 getApplicationContext().getSharedPreferences("JWT", MODE_PRIVATE);
         JSONObject object = new JSONObject();
+        String refreshToken = pref.getString("refresh", null);
+        if (refreshToken == null) {
+            getNewTokens();
+        }
         object.put("refresh", pref.getString("refresh", null));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, BASE_URL.concat("/api/token/refresh/"), object,

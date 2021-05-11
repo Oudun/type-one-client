@@ -31,6 +31,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -75,11 +76,15 @@ public class PhotoActivity extends BaseActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         HandlerThread mBackgroundThread = new HandlerThread("CameraBackground");
         mBackgroundThread.start();
         handler = new Handler(mBackgroundThread.getLooper());
         SurfaceView surface = (SurfaceView)findViewById(R.id.surface);
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout);
+        layout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            int size = Math.min(bottom-top, right-left);
+            surface.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
+        });
         String cameraId = "0";
         openCamera(cameraId);
         surfaces.clear();

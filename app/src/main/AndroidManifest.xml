@@ -17,7 +17,6 @@
         android:theme="@style/Theme.TypeOne"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".BaseActivity" />
         <activity
             android:name=".PhotoActivity"
             android:label="@string/foto" />
@@ -27,7 +26,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_login" />
-        <activity android:name=".RecordsActivity">
+        <activity android:name=".RecordsActivity"
+            android:label="@string/title_records" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

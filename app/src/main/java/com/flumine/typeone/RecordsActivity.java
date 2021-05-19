@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +101,7 @@ public class RecordsActivity extends BaseActivity {
                 return params;
             }
         };
-        int socketTimeout = 30000;
+        int socketTimeout = 300000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         jsonObjectRequest.setRetryPolicy(policy);
         Volley.newRequestQueue(RecordsActivity.this).add(jsonObjectRequest);

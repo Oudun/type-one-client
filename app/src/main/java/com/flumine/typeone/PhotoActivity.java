@@ -85,7 +85,7 @@ public class PhotoActivity extends BaseActivity {
             int size = Math.min(bottom-top, right-left);
             surface.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
         });
-        String cameraId = "0";
+        String cameraId = "1";
         openCamera(cameraId);
         surfaces.clear();
         surfaces.add(surface.getHolder().getSurface());

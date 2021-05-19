@@ -32,7 +32,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login(View view) throws Exception {
-
+        Log.e("REST", "LoginForm login");
         JSONObject object = new JSONObject();
         object.put("username", ((TextView) findViewById(R.id.username)).getText());
         object.put("password", ((TextView) findViewById(R.id.password)).getText());

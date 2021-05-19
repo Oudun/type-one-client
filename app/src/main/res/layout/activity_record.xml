@@ -106,7 +106,6 @@
         android:layout_gravity="bottom|start"
         android:onClick="addPhoto"
         android:layout_margin="@dimen/fab_margin"
-        android:tint="@color/white"
         app:srcCompat="@drawable/ic_baseline_camera_alt_24"
         tools:ignore="RtlHardcoded" />
 
@@ -119,7 +118,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:onClick="updateRecord"
         app:srcCompat="@drawable/ic_baseline_save_24"
-        android:tint="@color/white"
         tools:ignore="RtlHardcoded" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

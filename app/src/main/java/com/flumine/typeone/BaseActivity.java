@@ -7,10 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -28,24 +30,32 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("REST", "Base Activity onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
     }
 
     protected Response.ErrorListener errorListener = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
             if (error instanceof AuthFailureError) {
+                Log.d("REST", "Authentication error");
                 try {
                     refreshToken();
                 } catch (Exception e) {
                     Log.e("REST", e.getLocalizedMessage());
                 }
+            } else if (error instanceof TimeoutError) {
+                Log.d("REST", "Timeout");
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Fail to connect to the server",
+                        Toast.LENGTH_LONG);
+                toast.show();
             }
         }
     };
 
     private void refreshToken() throws Exception {
+        Log.e("REST", "Base Activity refresh token");
         SharedPreferences pref =
                 getApplicationContext().getSharedPreferences("JWT", MODE_PRIVATE);
         JSONObject object = new JSONObject();
@@ -76,6 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void getNewTokens() {
+        Log.e("REST", "Base Activity getNewTokens");
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);

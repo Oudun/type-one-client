@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".RecordsActivity">-->
+
+    <GridLayout
+        android:layout_height="match_parent"
+        android:layout_width="300sp"
+        android:orientation="horizontal"
+        android:columnCount="6"
+        android:rowCount="1"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:id="@+id/date_string"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="#FFFFFF"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:background="#FFFFFF"
+            android:id="@+id/shot_string"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <TextView
+            android:background="#FFFFFF"
+            android:id="@+id/gluc_string"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <TextView
+            android:background="#FFFFFF"
+            android:id="@+id/bread_string"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <TextView
+            android:background="#FFFFFF"
+            android:id="@+id/notes"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/meal_img"
+            android:layout_height="100dp"
+            android:layout_width="100dp"
+            android:background="#FFFFFF"/>
+
+    </GridLayout>
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

@@ -2,57 +2,30 @@ package com.flumine.typeone;
 
 import android.Manifest;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CaptureFailure;
 import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.CaptureResult;
-import android.hardware.camera2.TotalCaptureResult;
-import android.hardware.camera2.params.InputConfiguration;
-import android.hardware.camera2.params.StreamConfigurationMap;
-import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
-import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceView;
-import android.view.TextureView;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 
 import static android.graphics.ImageFormat.JPEG;
-import static android.hardware.camera2.CameraDevice.TEMPLATE_ZERO_SHUTTER_LAG;
 
 public class PhotoActivity extends BaseActivity {
 
@@ -84,11 +57,15 @@ public class PhotoActivity extends BaseActivity {
         layout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             int size = Math.min(bottom-top, right-left);
             surface.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
+            surfaces.clear();
+            surfaces.add(surface.getHolder().getSurface());
+            ImageReader imageReader = ImageReader.newInstance(size, size, JPEG, 2);
+            ImageReader.OnImageAvailableListener onImageAvailableListener = new MyImageAvailableListener();
+            imageReader.setOnImageAvailableListener(onImageAvailableListener, null);
+            surfaces.add(imageReader.getSurface());
         });
         String cameraId = "1";
         openCamera(cameraId);
-        surfaces.clear();
-        surfaces.add(surface.getHolder().getSurface());
     }
 
     private void openCamera(String id) {
@@ -113,25 +90,39 @@ public class PhotoActivity extends BaseActivity {
 
     CameraDevice.StateCallback cameraDeviceStateCallback = new CameraDevice.StateCallback() {
         @Override public void onOpened(@NonNull CameraDevice camera) {report("onOpened");
-            CaptureRequest.Builder builder = null;
             try {
-                camera.createCaptureSession(surfaces, cameraCaptureSessionStateCallback, null);
+                final CaptureRequest.Builder builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                builder.addTarget(surfaces.get(0));
+                camera.createCaptureSession(surfaces, new CameraCaptureSession.StateCallback() {
+                    @Override
+                    public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+                        builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
+                        builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
+                        session = cameraCaptureSession;
+                        try {
+                            session.setRepeatingRequest(builder.build(), captureCallback, handler);
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onConfigureFailed(@NonNull CameraCaptureSession session) {
+
+                    }
+                }, null);
+
+
             } catch (Exception e) {
                 report(e.getMessage());
             }
-            try {
-                builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            } catch (Exception e) {report(e.getMessage());}
-            builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
-            builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
-            builder.addTarget(surfaces.get(0));
-            captureRequest = builder.build();
+//            builder.addTarget(surfaces.get(1));
+//            captureRequest = builder.build();
         }
         @Override public void onDisconnected(@NonNull CameraDevice camera) {report("onDisconnected"); camera.close();}
         @Override public void onError(@NonNull CameraDevice camera, int error) {report("StateCallback.onError #" + error);}
     };
 
-    CameraCaptureSession.StateCallback cameraCaptureSessionStateCallback = new CameraCaptureSession.StateCallback() {
+    CameraCaptureSession.StateCallback stateCallback = new CameraCaptureSession.StateCallback() {
         @Override public void onSurfacePrepared(@NonNull CameraCaptureSession session, @NonNull Surface surface) {
             super.onSurfacePrepared(session, surface);
             report("StateCallback.onConfigured1");
@@ -139,8 +130,7 @@ public class PhotoActivity extends BaseActivity {
         @Override public void onConfigured(@NonNull CameraCaptureSession session) {report("StateCallback.onConfigured3");
             PhotoActivity.this.session = session;
             try {
-                //PhotoActivity.this.session.capture(captureRequest, cameraCaptureSessionCaptureCallback, null);
-                PhotoActivity.this.session.setRepeatingRequest(captureRequest, cameraCaptureSessionCaptureCallback, null);
+                PhotoActivity.this.session.setRepeatingRequest(captureRequest, captureCallback, null);
             } catch (Exception e) {
                 report ("StateCallback.onConfigured2 " + e.getMessage());
             }
@@ -148,7 +138,9 @@ public class PhotoActivity extends BaseActivity {
         @Override public void onConfigureFailed(@NonNull CameraCaptureSession session) {report("StateCallback.onConfigureFailed");}
     };
 
-    CameraCaptureSession.CaptureCallback cameraCaptureSessionCaptureCallback = new CameraCaptureSession.CaptureCallback() {
+
+
+    CameraCaptureSession.CaptureCallback captureCallback = new CameraCaptureSession.CaptureCallback() {
 //        @Override public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) { super.onCaptureStarted(session, request, timestamp, frameNumber); report("CaptureCallback.onCaptureStarted");}
 //        @Override public void onCaptureProgressed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureResult partialResult) { super.onCaptureProgressed(session, request, partialResult);report("CaptureCallback.onCaptureProcessed"); }
 //        @Override public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) { super.onCaptureCompleted(session, request, result); report("CaptureCallback.onCaptureCompleted");}
@@ -179,6 +171,14 @@ public class PhotoActivity extends BaseActivity {
 //            }
 //        }
 //    }
+
+
+    class MyImageAvailableListener implements ImageReader.OnImageAvailableListener {
+        @Override
+        public void onImageAvailable(ImageReader reader) {
+            Log.d("CAMERA", "image available");
+        }
+    }
 
     public void addPhoto(View view) {
     }

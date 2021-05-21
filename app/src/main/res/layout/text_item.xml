@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:columnCount="5"
+        android:rowCount="2">
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_rowSpan="2"
+            android:text="ZZZ Z z Z z "
+            android:background="#00FFFF"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:text="AAA"
+            android:background="#FF0000"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_columnWeight="2"
+            android:text="BBB"
+            android:background="#FF00FF"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:text="CCC"
+            android:background="#FFFF00"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_rowSpan="2"
+            android:text="ZZ Z r e e e"
+            android:background="#00FF00"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_columnWeight="4"
+            android:layout_columnSpan="3"
+            android:text="CCC"
+            android:background="#0000FF"/>
+
+    </GridLayout>
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

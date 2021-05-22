@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -41,7 +44,6 @@ public class RecordActivity extends BaseActivity {
         recordId = getIntent().getIntExtra("RECORD_ID", 0);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/"), null,
-//                Request.Method.GET, BASE_URL.concat("/api/record/34/"), null,
                 response -> {
                     try {
                         update(response);
@@ -73,13 +75,34 @@ public class RecordActivity extends BaseActivity {
                 .setText(response.getString("glucose_level"));
         ((TextView)findViewById(R.id.bread_string))
                 .setText(response.getString("bread_units"));
+
+        LinearLayout photosLayout = (LinearLayout)findViewById(R.id.photos);
+
+        photosLayout.removeAllViews();
+
         JSONArray photos = response.getJSONArray("photos");
-        if (photos.length()>0) {
-            String rawImage = ((JSONObject)photos.get(0)).getString("data");
+        for (int i=0; i < photos.length(); i++) {
+            JSONObject photo = (JSONObject)photos.get(i);
+            String rawImage = photo.getString("data");
             byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            ((ImageView)findViewById(R.id.preview))
-                    .setImageBitmap(bitmap);
+            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.image, null);
+            imageView.setImageBitmap(bitmap);
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(1024, 768));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent intent = new Intent(RecordActivity.this, PhotoActivity.class);
+                        intent.putExtra("PHOTO_ID", photo.getInt("id"));
+                        intent.putExtra("RECORD_ID", recordId);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e("TEST", "Fail to get photo id", e);
+                    }
+                }
+            });
+            photosLayout.addView(imageView);
         }
         Log.d("REST", "Record retrieved");
         findViewById(R.id.timer).setVisibility(View.GONE);

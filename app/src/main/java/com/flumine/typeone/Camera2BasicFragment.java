@@ -45,20 +45,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class Camera2BasicFragment extends Fragment
         implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+
+
+    private static CameraActivity cameraActivity;
 
     /**
      * Conversion from screen rotation to JPEG orientation.
@@ -407,6 +417,7 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        cameraActivity = (CameraActivity) getActivity();
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
     }
 
@@ -921,23 +932,32 @@ public class Camera2BasicFragment extends Fragment
             ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.remaining()];
             buffer.get(bytes);
-            FileOutputStream output = null;
-            try {
-                output = new FileOutputStream(mFile);
-                output.write(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                mImage.close();
-                if (null != output) {
-                    try {
-                        output.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+
+            cameraActivity.storePicture(bytes);
+
+//            (CameraActivity)(Camera2BasicFragment.getActivity()).storePicture(bytes);
+
+//            FileOutputStream output = null;
+//            try {
+//                output = new FileOutputStream(mFile);
+//                output.write(bytes);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } finally {
+//                mImage.close();
+//                if (null != output) {
+//                    try {
+//                        output.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
         }
+
+        private void storePicture() {
+        }
+
 
     }
 

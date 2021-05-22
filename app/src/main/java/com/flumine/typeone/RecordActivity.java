@@ -22,6 +22,8 @@ import java.util.Map;
 
 public class RecordActivity extends BaseActivity {
 
+    int recordId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +31,14 @@ public class RecordActivity extends BaseActivity {
         getRecord();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getRecord();
+    }
+
     private void getRecord() {
-        int recordId = getIntent().getIntExtra("RECORD_ID", 0);
+        recordId = getIntent().getIntExtra("RECORD_ID", 0);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/"), null,
 //                Request.Method.GET, BASE_URL.concat("/api/record/34/"), null,
@@ -91,6 +99,7 @@ public class RecordActivity extends BaseActivity {
     public void addPhoto(View view) {
         Intent intent = new Intent(this, CameraActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("RECORD_ID", recordId);
         startActivity(intent);
     }
 

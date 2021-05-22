@@ -1,51 +1,118 @@
 package com.flumine.typeone;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
-import com.flumine.typeone.databinding.ActivityPhoto2Binding;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PhotoActivity extends BaseActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityPhoto2Binding binding;
+    int recordId;
+    int photoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        recordId = getIntent().getIntExtra("RECORD_ID", 0);
+        photoId = getIntent().getIntExtra("PHOTO_ID", 0);
         super.onCreate(savedInstanceState);
-
-        binding = ActivityPhoto2Binding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_photo);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setContentView(R.layout.activity_photo);
+        getPhoto();
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_photo);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    protected void onResume() {
+        super.onResume();
+        getPhoto();
     }
+
+    private void getPhoto() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/photo/" + photoId), null,
+                response -> {
+                    try {
+                        update(response);
+                    } catch (Exception e) {
+                        Log.e("REST", e.getMessage());
+                    }
+                },
+                errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                String accessToken = getApplicationContext()
+                        .getSharedPreferences("JWT", MODE_PRIVATE)
+                        .getString("access", null);
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(PhotoActivity.this).add(jsonObjectRequest);
+    }
+
+    private void update(JSONObject photo) throws Exception {
+        String rawImage = photo.getString("data");
+        byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        ImageView imageView = (ImageView) findViewById(R.id.photo);
+        imageView.setImageBitmap(bitmap);
+    }
+
+    private void deletePhoto() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.DELETE, BASE_URL.concat("/api/record/" + recordId +"/photo/" + photoId), null,
+                response -> {
+                    Log.d("REST", "Photo deleted");
+                },
+                errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                String accessToken = getApplicationContext()
+                        .getSharedPreferences("JWT", MODE_PRIVATE)
+                        .getString("access", null);
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(PhotoActivity.this).add(jsonObjectRequest);
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getPhoto();
+    }
+
+    public void back(View view) {
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("RECORD_ID", recordId);
+        startActivity(intent);
+    }
+
+    public void deletePhoto(View view) {
+        deletePhoto();
+        back(view);
+    }
+
 }

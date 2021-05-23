@@ -29,6 +29,7 @@ import java.util.Map;
 public class RecordActivity extends BaseActivity {
 
     int recordId;
+    long time;
 
     DateFormat LONG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     DateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("MM dd HH:mm");

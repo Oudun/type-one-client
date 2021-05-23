@@ -77,7 +77,9 @@ public class PhotoActivity extends BaseActivity {
 
     private void deletePhoto() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.DELETE, BASE_URL.concat("/api/record/" + recordId +"/photo/" + photoId), null,
+                Request.Method.DELETE,
+                BASE_URL.concat(String.format("/api/record/%d/photo/%d/", recordId, photoId)),
+                null,
                 response -> {
                     Log.d("REST", "Photo deleted");
                 },

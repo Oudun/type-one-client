@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ClientError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -48,6 +49,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Log.d("REST", "Timeout");
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Fail to connect to the server",
+                        Toast.LENGTH_LONG);
+                toast.show();
+            } else if (error instanceof ClientError) {
+                Log.d("REST", "Client error");
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        error.getMessage(),
                         Toast.LENGTH_LONG);
                 toast.show();
             }

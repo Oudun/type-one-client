@@ -20,12 +20,18 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RecordActivity extends BaseActivity {
 
     int recordId;
+
+    DateFormat LONG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    DateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("MM dd HH:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +49,8 @@ public class RecordActivity extends BaseActivity {
     private void getRecord() {
         recordId = getIntent().getIntExtra("RECORD_ID", 0);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/"), null,
+                Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/"),
+                null,
                 response -> {
                     try {
                         update(response);
@@ -67,6 +74,7 @@ public class RecordActivity extends BaseActivity {
     }
 
     private void update(JSONObject response) throws Exception {
+
         ((TextView)findViewById(R.id.date_string))
                 .setText(response.getString("time"));
         ((TextView)findViewById(R.id.shot))
@@ -124,6 +132,55 @@ public class RecordActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("RECORD_ID", recordId);
         startActivity(intent);
+    }
+
+    public void back(View view) {
+        Intent intent = new Intent(this, RecordsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+    }
+
+    public void storeRecord(View view) throws Exception {
+
+        JSONObject record = new JSONObject();
+
+        String date = ((TextView)(findViewById(R.id.date_string))).getEditableText().toString();
+
+        record.put("id", recordId);
+        record.put("type", "0");
+        //todo
+        record.put("time", LONG_DATE_FORMAT.format(new Date()));
+        record.put("insulin_amount", ((TextView)findViewById(R.id.shot)).getText());
+        record.put("glucose_level", ((TextView)findViewById(R.id.sugar)).getText());
+        record.put("bread_units", ((TextView)findViewById(R.id.bread_string)).getText());
+        record.put("notes", "aaaa");
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            Request.Method.PUT, BASE_URL.concat("/api/record/" + recordId +"/"),
+            record,
+            response -> {
+                try {
+                    Log.e("REST", "Update record response is " + response.toString());
+                    back(view);
+                } catch (Exception e) {
+                    Log.e("REST", e.getMessage());
+                }
+            },
+            errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                String accessToken = getApplicationContext()
+                        .getSharedPreferences("JWT", MODE_PRIVATE)
+                        .getString("access", null);
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+
+        Volley.newRequestQueue(RecordActivity.this).add(jsonObjectRequest);
+
     }
 
 }

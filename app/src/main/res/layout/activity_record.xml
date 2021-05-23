@@ -104,7 +104,7 @@
             <LinearLayout
                 android:id="@+id/photos"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5sp"
                 android:orientation="vertical"
                 android:scrollbars="vertical"/>
@@ -114,24 +114,32 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/submit"
-        android:contentDescription="@string/login"
+        android:contentDescription="@string/photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:onClick="addPhoto"
+        android:onClick="back"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_baseline_camera_alt_24"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="RtlHardcoded" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/photo"
-        android:contentDescription="@string/login"
+        android:contentDescription="@string/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:onClick="addPhoto"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_baseline_add_a_photo_24"
+        tools:ignore="RtlHardcoded" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:contentDescription="@string/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:onClick="updateRecord"
+        android:onClick="storeRecord"
         app:srcCompat="@drawable/ic_baseline_save_24"
         tools:ignore="RtlHardcoded" />
 

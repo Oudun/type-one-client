@@ -30,4 +30,7 @@
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="intro_message">I</string>
     <string name="title_activity_photo">PhotoActivity</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_record">Add record</string>
+    <string name="save">Save</string>
 </resources>

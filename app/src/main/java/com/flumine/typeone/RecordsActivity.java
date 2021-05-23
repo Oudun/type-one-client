@@ -111,6 +111,12 @@ public class RecordsActivity extends BaseActivity {
         getRecords();
     }
 
+    public void newRecord(View view) {
+        Intent intent = new Intent(this, NewRecordActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        startActivity(intent);
+    }
+
     class JSONAdapter extends BaseAdapter implements ListAdapter {
 
         JSONArray array;

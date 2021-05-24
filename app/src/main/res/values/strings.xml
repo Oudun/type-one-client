@@ -33,4 +33,6 @@
     <string name="cancel">Cancel</string>
     <string name="add_record">Add record</string>
     <string name="save">Save</string>
+    <string name="time">Time</string>
+    <string name="insulin">Insulin</string>
 </resources>

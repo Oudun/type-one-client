@@ -38,6 +38,7 @@ public class RecordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        recordId = getIntent().getIntExtra("RECORD_ID", 0);
         getRecord();
     }
 
@@ -48,7 +49,7 @@ public class RecordActivity extends BaseActivity {
     }
 
     private void getRecord() {
-        recordId = getIntent().getIntExtra("RECORD_ID", 0);
+        Log.d("REST", "Activity intent record id is " + recordId);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/"),
                 null,
@@ -76,14 +77,10 @@ public class RecordActivity extends BaseActivity {
 
     private void update(JSONObject response) throws Exception {
 
-        ((TextView)findViewById(R.id.date_string))
-                .setText(response.getString("time"));
-        ((TextView)findViewById(R.id.shot))
-                .setText(response.getString("insulin_amount"));
-        ((TextView)findViewById(R.id.sugar))
-                .setText(response.getString("glucose_level"));
-        ((TextView)findViewById(R.id.bread_string))
-                .setText(response.getString("bread_units"));
+        //((TextView)findViewById(R.id.date_string)).setText(response.getString("time"));
+        ((TextView)findViewById(R.id.shot)).setText(response.getString("insulin_amount"));
+        ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));
+        ((TextView)findViewById(R.id.bread_string)).setText(response.getString("bread_units"));
 
         LinearLayout photosLayout = (LinearLayout)findViewById(R.id.photos);
 
@@ -98,17 +95,14 @@ public class RecordActivity extends BaseActivity {
             ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.image, null);
             imageView.setImageBitmap(bitmap);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(1024, 768));
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent intent = new Intent(RecordActivity.this, PhotoActivity.class);
-                        intent.putExtra("PHOTO_ID", photo.getInt("id"));
-                        intent.putExtra("RECORD_ID", recordId);
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        Log.e("TEST", "Fail to get photo id", e);
-                    }
+            imageView.setOnClickListener(v -> {
+                try {
+                    Intent intent = new Intent(RecordActivity.this, PhotoActivity.class);
+                    intent.putExtra("PHOTO_ID", photo.getInt("id"));
+                    intent.putExtra("RECORD_ID", recordId);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e("TEST", "Fail to get photo id", e);
                 }
             });
             photosLayout.addView(imageView);
@@ -121,6 +115,8 @@ public class RecordActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        recordId = intent.getIntExtra("RECORD_ID", -1);
+        Log.d("REST", "New intent record id is " + intent.getIntExtra("RECORD_ID", -1));
         getRecord();
     }
 

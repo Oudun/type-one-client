@@ -79,6 +79,7 @@ public class RecordActivity extends BaseActivity {
 
         //((TextView)findViewById(R.id.date_string)).setText(response.getString("time"));
         ((TextView)findViewById(R.id.shot)).setText(response.getString("insulin_amount"));
+        ((TextView)findViewById(R.id.insulin_name)).setText(response.getJSONObject("insulin").getString("name"));
         ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));
         ((TextView)findViewById(R.id.bread_string)).setText(response.getString("bread_units"));
 

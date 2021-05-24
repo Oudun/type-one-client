@@ -27,6 +27,8 @@
             android:columnCount="2"
             android:rowCount="6">
 
+            <!-- row 1 -->
+
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -36,6 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:text="@string/time"/>
+
+            <!-- row 2 -->
 
             <EditText
                 android:id="@+id/date_string_1"
@@ -66,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:text="@string/insulin"/>
-
 
             <EditText
                 android:id="@+id/shot"
@@ -109,26 +112,25 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
-
-            <!-- row 7 -->
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="2"
-                android:layout_columnSpan="2"
-                android:text="@string/notes"/>
-
-            <!-- row 8 -->
-
-            <EditText
-                android:id="@+id/notes"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="2"
-                android:layout_columnSpan="2"
-                android:inputType="textMultiLine"/>
+                android:layout_columnWeight="1"
+                android:inputType="numberDecimal"/>
 
         </GridLayout>
+
+        <!-- row 7 -->
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/notes"/>
+
+        <!-- row 8 -->
+
+        <EditText
+            android:id="@+id/notes"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="textMultiLine"/>
 
         <ScrollView
             android:layout_width="match_parent"

@@ -21,10 +21,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    protected static final DateFormat DRF_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
+    protected static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     protected static final String BASE_URL = "http://192.168.0.191:8000";
     //protected static final String BASE_URL = "https://type-one.herokuapp.com";

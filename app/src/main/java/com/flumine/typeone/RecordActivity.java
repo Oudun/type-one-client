@@ -29,7 +29,7 @@ import java.util.Map;
 public class RecordActivity extends BaseActivity {
 
     int recordId;
-    long time;
+    Date date;
 
     DateFormat LONG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     DateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("MM dd HH:mm");
@@ -77,7 +77,10 @@ public class RecordActivity extends BaseActivity {
 
     private void update(JSONObject response) throws Exception {
 
-        //((TextView)findViewById(R.id.date_string)).setText(response.getString("time"));
+        date = DRF_DATE_FORMAT.parse(response.getString("time"));
+
+        ((TextView)findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
+        ((TextView)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
         ((TextView)findViewById(R.id.shot)).setText(response.getString("insulin_amount"));
         ((TextView)findViewById(R.id.insulin_name)).setText(response.getJSONObject("insulin").getString("name"));
         ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));

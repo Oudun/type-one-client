@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import android.util.Base64;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,10 +151,9 @@ public class RecordsActivity extends BaseActivity {
             JSONObject record = (JSONObject) getItem(position);
             try {
                 GridLayout grid = (GridLayout) convertView;
-                String dateTime = record.getString("time");
-                Object[] dateParts = new MessageFormat("{0} {1} {2}").parse(dateTime);
-                ((TextView)grid.findViewById(R.id.date_string)).setText(dateParts[0]+" "+dateParts[1]);
-                ((TextView)grid.findViewById(R.id.time_string)).setText((String)dateParts[2]);
+                Date date = DRF_DATE_FORMAT.parse(record.getString("time"));
+                ((TextView)grid.findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
+                ((TextView)grid.findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
                 ((TextView)grid.findViewById(R.id.bread_string))
                         .setText(record.getString("bread_units"));
                 ((TextView)grid.findViewById(R.id.shot_string)).setText("TEST");
@@ -166,6 +166,8 @@ public class RecordsActivity extends BaseActivity {
                         .setText(record.getString("insulin_amount"));
                 ((TextView)grid.findViewById(R.id.gluc_string))
                         .setText(record.getString("glucose_level"));
+                ((TextView)grid.findViewById(R.id.notes))
+                        .setText(record.getString("notes"));
                 JSONArray photos = record.getJSONArray("photos");
                 if (photos.length()>0) {
                     String rawImage = ((JSONObject)photos.get(0)).getString("thumb");

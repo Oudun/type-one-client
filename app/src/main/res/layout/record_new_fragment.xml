@@ -8,127 +8,93 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <GridLayout
-        android:layout_width="match_parent"
+    <TextView
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="6">
+        android:layout_width="match_parent"
+        android:text="@string/date"/>
 
-        <!-- row 1 -->
+    <EditText
+        android:id="@+id/date_string"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="datetime" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="@string/date"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/time"/>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="@string/time"/>
+    <EditText
+        android:id="@+id/time_string"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="datetime" />
 
-        <!-- row 2 -->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/shot"/>
 
-        <EditText
-            android:id="@+id/date_string"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:inputType="datetime" />
+    <EditText
+        android:id="@+id/shot"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="number"/>
 
-        <EditText
-            android:id="@+id/time_string"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:inputType="datetime" />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/insulin"/>
 
-        <!-- row 3 -->
+    <EditText
+        android:id="@+id/insulin_name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="none"/>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="@string/shot"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/sugar"/>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="@string/insulin"/>
+    <EditText
+        android:id="@+id/sugar"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="numberDecimal" />
 
-        <EditText
-            android:id="@+id/shot"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:inputType="number"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/bread_unit"/>
 
-        <EditText
-            android:id="@+id/insulin_name"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:inputType="none"/>
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="@string/sugar"/>
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="@string/bread_unit"/>
-
-        <!-- row 6 -->
-
-        <EditText
-            android:id="@+id/sugar"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/bread_string"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:inputType="numberDecimal"/>
-
-    </GridLayout>
-
-    <!-- row 7 -->
+    <EditText
+        android:id="@+id/bread_string"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/notes"/>
 
-    <!-- row 8 -->
-
     <EditText
         android:id="@+id/notes"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:inputType="textMultiLine"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/photos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:orientation="vertical"
-            android:scrollbars="vertical"/>
-
-    </ScrollView>
 
 </LinearLayout>

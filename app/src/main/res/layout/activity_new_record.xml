@@ -8,81 +8,11 @@
     tools:context=".NewRecordActivity">
 
     <LinearLayout
-        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent"
+        android:layout_margin="5sp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/date"/>
-
-        <EditText
-            android:id="@+id/date_string"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="datetime" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/shot"
-            android:labelFor="@id/shot"/>
-
-        <EditText
-            android:id="@+id/shot"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:autofillHints="@string/shot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sugar"/>
-
-        <EditText
-            android:id="@+id/sugar"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/bread_unit"/>
-
-        <EditText
-            android:id="@+id/bread_string"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/notes"/>
-
-        <EditText
-            android:id="@+id/notes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/photo"/>
+        <include layout="@layout/record_fragment"/>
 
     </LinearLayout>
 
@@ -94,7 +24,7 @@
         android:layout_gravity="bottom|start"
         android:onClick="back"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_baseline_camera_alt_24"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="RtlHardcoded" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

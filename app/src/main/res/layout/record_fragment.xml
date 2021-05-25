@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="6">
+
+        <!-- row 1 -->
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="@string/date"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="@string/time"/>
+
+        <!-- row 2 -->
+
+        <EditText
+            android:id="@+id/date_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:onClick="setDate"
+            android:inputType="date"/>
+
+        <EditText
+            android:id="@+id/time_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:onClick="setTime"
+            android:inputType="time"/>
+
+        <!-- row 3 -->
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="@string/shot"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="@string/insulin"/>
+
+        <EditText
+            android:id="@+id/shot"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/insulin_name"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:inputType="none"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="@string/sugar"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="@string/bread_unit"/>
+
+        <!-- row 6 -->
+
+        <EditText
+            android:id="@+id/sugar"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/bread_string"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:inputType="numberDecimal"/>
+
+    </GridLayout>
+
+    <!-- row 7 -->
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/notes"/>
+
+    <!-- row 8 -->
+
+    <EditText
+        android:id="@+id/notes"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textMultiLine"/>
+
+</LinearLayout>

@@ -166,8 +166,8 @@ public class RecordsActivity extends BaseActivity {
                         .setText(record.getString("insulin_amount"));
                 ((TextView)grid.findViewById(R.id.gluc_string))
                         .setText(record.getString("glucose_level"));
-                ((TextView)grid.findViewById(R.id.notes))
-                        .setText(record.getString("notes"));
+//                ((TextView)grid.findViewById(R.id.notes))
+//                        .setText(record.getString("notes"));
                 JSONArray photos = record.getJSONArray("photos");
                 if (photos.length()>0) {
                     String rawImage = ((JSONObject)photos.get(0)).getString("thumb");

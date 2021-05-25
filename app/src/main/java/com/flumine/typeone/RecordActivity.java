@@ -1,5 +1,7 @@
 package com.flumine.typeone;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,10 +10,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -22,6 +27,7 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +36,6 @@ public class RecordActivity extends BaseActivity {
 
     int recordId;
     Date date;
-
-    DateFormat LONG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    DateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("MM dd HH:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +86,10 @@ public class RecordActivity extends BaseActivity {
         ((TextView)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
         ((TextView)findViewById(R.id.shot)).setText(response.getString("insulin_amount"));
         ((TextView)findViewById(R.id.insulin_name)).setText(response.getJSONObject("insulin").getString("name"));
+        ((TextView)findViewById(R.id.insulin_name)).setEnabled(false);
         ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));
         ((TextView)findViewById(R.id.bread_string)).setText(response.getString("bread_units"));
+        ((TextView)findViewById(R.id.notes)).setText(response.getString("notes"));
 
         LinearLayout photosLayout = (LinearLayout)findViewById(R.id.photos);
 
@@ -145,16 +150,13 @@ public class RecordActivity extends BaseActivity {
 
         JSONObject record = new JSONObject();
 
-        String date = ((TextView)(findViewById(R.id.date_string))).getEditableText().toString();
-
         record.put("id", recordId);
         record.put("type", "0");
-        //todo
-        record.put("time", LONG_DATE_FORMAT.format(new Date()));
+        record.put("time", DRF_DATE_FORMAT.format(date));
         record.put("insulin_amount", ((TextView)findViewById(R.id.shot)).getText());
         record.put("glucose_level", ((TextView)findViewById(R.id.sugar)).getText());
         record.put("bread_units", ((TextView)findViewById(R.id.bread_string)).getText());
-        record.put("notes", "aaaa");
+        record.put("notes", ((TextView)findViewById(R.id.notes)).getText());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
             Request.Method.PUT, BASE_URL.concat("/api/record/" + recordId +"/"),
@@ -182,6 +184,48 @@ public class RecordActivity extends BaseActivity {
 
         Volley.newRequestQueue(RecordActivity.this).add(jsonObjectRequest);
 
+    }
+
+    TimePickerDialog timePickerDialog;
+
+    public void setTime(View view) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                ((EditText)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(calendar.getTime()));
+                date = calendar.getTime();
+            }
+        }, hour, minute, true);
+        timePickerDialog.show();
+    }
+
+    DatePickerDialog datePickerDialog;
+
+    public void setDate(View view) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                ((EditText)findViewById(R.id.date_string)).setText(DATE_FORMAT.format(calendar.getTime()));
+                date = calendar.getTime();
+            }
+        }, year, month, day);
+        datePickerDialog.show();
     }
 
 }

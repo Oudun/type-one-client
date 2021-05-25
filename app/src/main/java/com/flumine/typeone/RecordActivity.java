@@ -153,10 +153,12 @@ public class RecordActivity extends BaseActivity {
         record.put("id", recordId);
         record.put("type", "0");
         record.put("time", DRF_DATE_FORMAT.format(date));
-        record.put("insulin_amount", ((TextView)findViewById(R.id.shot)).getText());
-        record.put("glucose_level", ((TextView)findViewById(R.id.sugar)).getText());
-        record.put("bread_units", ((TextView)findViewById(R.id.bread_string)).getText());
-        record.put("notes", ((TextView)findViewById(R.id.notes)).getText());
+        record.put("insulin_amount", getNumber(R.id.shot));
+        record.put("glucose_level", getNumber(R.id.sugar));
+        record.put("bread_units", getNumber(R.id.bread_string));
+        record.put("notes", getStr(R.id.notes));
+
+        Log.d("REST", "Storing " + record.toString());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
             Request.Method.PUT, BASE_URL.concat("/api/record/" + recordId +"/"),

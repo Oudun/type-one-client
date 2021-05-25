@@ -154,18 +154,11 @@ public class RecordsActivity extends BaseActivity {
                 Date date = DRF_DATE_FORMAT.parse(record.getString("time"));
                 ((TextView)grid.findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
                 ((TextView)grid.findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
-                ((TextView)grid.findViewById(R.id.bread_string))
-                        .setText(record.getString("bread_units"));
-                ((TextView)grid.findViewById(R.id.shot_string)).setText("TEST");
+                ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
+                ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
+                ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
                 JSONObject insulin = record.getJSONObject("insulin");
-                int inslulinNameId = getResources().getIdentifier(insulin.getString("name"),
-                        "string", "com.flumine.typeone");
-                ((TextView)grid.findViewById(R.id.insulin_name))
-                        .setText(getResources().getString(inslulinNameId));
-                ((TextView)grid.findViewById(R.id.shot_string))
-                        .setText(record.getString("insulin_amount"));
-                ((TextView)grid.findViewById(R.id.gluc_string))
-                        .setText(record.getString("glucose_level"));
+                ((TextView)grid.findViewById(R.id.insulin_name)).setText(insulin.getString("name"));
 //                ((TextView)grid.findViewById(R.id.notes))
 //                        .setText(record.getString("notes"));
                 JSONArray photos = record.getJSONArray("photos");

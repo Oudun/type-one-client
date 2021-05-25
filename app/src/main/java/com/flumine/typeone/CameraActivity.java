@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -15,6 +17,8 @@ import java.util.Map;
 
 public class CameraActivity extends BaseActivity {
 
+    int recordId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +28,21 @@ public class CameraActivity extends BaseActivity {
                     .replace(R.id.container, Camera2BasicFragment.newInstance())
                     .commit();
         }
+        recordId = getIntent().getIntExtra("RECORD_ID", 0);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        recordId = intent.getIntExtra("RECORD_ID", -1);
+        Log.d("REST", "New intent record id is " + intent.getIntExtra("RECORD_ID", -1));
+    }
+
+    public void back() {
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        intent.putExtra("RECORD_ID", recordId);
+        startActivity(intent);
     }
 
     public void storePicture(byte[] bytes) {
@@ -38,7 +57,6 @@ public class CameraActivity extends BaseActivity {
             Log.e("REST", e.getMessage());
         }
 
-        int recordId = getIntent().getIntExtra("RECORD_ID", 0);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
             Request.Method.POST, BASE_URL.concat("/api/record/" + recordId +"/photos/"), object,
             response -> {
@@ -60,6 +78,11 @@ public class CameraActivity extends BaseActivity {
                 return params;
             }
         };
+
+        int socketTimeout = 300000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
+
         Volley.newRequestQueue(CameraActivity.this).add(jsonObjectRequest);
 
     }

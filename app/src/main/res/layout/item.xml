@@ -86,7 +86,3 @@
         android:ellipsize="end"/>
 
 </GridLayout>
-
-
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

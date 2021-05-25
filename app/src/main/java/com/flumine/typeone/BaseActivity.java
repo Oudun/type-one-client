@@ -29,7 +29,7 @@ import java.util.Map;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected static final DateFormat DRF_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
+    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM");
     protected static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     //protected static final String BASE_URL = "http://192.168.0.191:8000";
@@ -60,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             } else if (error instanceof ClientError) {
                 Log.d("REST", "Client error");
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        error.getMessage(),
+                        "Error message is " + error.getMessage(),
                         Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -103,6 +103,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    protected String getNumber(int id) {
+        String result = ((TextView)findViewById(id)).getText().toString();
+        return result.isEmpty() ? "0" : result;
+    }
+
+    protected String getStr(int id) {
+        return ((TextView)findViewById(id)).getText().toString();
     }
 
 }

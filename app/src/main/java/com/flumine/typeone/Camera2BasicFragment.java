@@ -610,9 +610,14 @@ public class Camera2BasicFragment extends Fragment
             if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("Time out waiting to lock camera opening.");
             }
+            if (mCameraId == null) {
+                Log.d("TEST", "Camera id is null");
+                ((CameraActivity)getActivity()).back();
+            }
             manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
-            e.printStackTrace();
+            Log.e("TEST", "Fail to open camera", e);
+            ((CameraActivity)getActivity()).back();
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
         }
@@ -832,7 +837,7 @@ public class Camera2BasicFragment extends Fragment
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
-                    showToast("Saved: " + mFile);
+                    Log.d("REST","Saved: " + mFile);
                     Log.d(TAG, mFile.toString());
                     unlockFocus();
                 }

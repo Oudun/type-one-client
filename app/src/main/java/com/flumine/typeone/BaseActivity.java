@@ -25,10 +25,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected static final DateFormat DRF_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    //"2021-05-23T13:07:33.365727-05:00"
+    protected static DateFormat DRF_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ");
     protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM");
     protected static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 

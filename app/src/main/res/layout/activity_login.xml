@@ -19,7 +19,6 @@
 
         <EditText
             android:id="@+id/username"
-            android:text="krzmelik"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -30,7 +29,6 @@
 
         <EditText
             android:id="@+id/password"
-            android:text="vahmurka"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

@@ -149,6 +149,7 @@ public class RecordsActivity extends BaseActivity {
             if (convertView == null)
                 convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
             JSONObject record = (JSONObject) getItem(position);
+            Log.v("REST", record.toString());
             try {
                 GridLayout grid = (GridLayout) convertView;
                 Date date = DRF_DATE_FORMAT.parse(record.getString("time"));
@@ -158,9 +159,8 @@ public class RecordsActivity extends BaseActivity {
                 ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
                 ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
                 JSONObject insulin = record.getJSONObject("insulin");
-                ((TextView)grid.findViewById(R.id.insulin_name)).setText(insulin.getString("name"));
-//                ((TextView)grid.findViewById(R.id.notes))
-//                        .setText(record.getString("notes"));
+                ((TextView)grid.findViewById(R.id.insulin_name))
+                        .setText(getStringResource(insulin.getString("name")));
                 JSONArray photos = record.getJSONArray("photos");
                 if (photos.length()>0) {
                     String rawImage = ((JSONObject)photos.get(0)).getString("thumb");

@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -17,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.appcompat.view.menu.MenuBuilder;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -41,6 +45,22 @@ public class RecordActivity extends BaseActivity {
     Date date;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(getClass().getName(), "onCreateOptionsMenu");
+        getMenuInflater().inflate(R.menu.record_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == (R.id.delete_listed_record)) {
+            deleteRecord();
+            back(null);
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
@@ -53,6 +73,30 @@ public class RecordActivity extends BaseActivity {
         super.onResume();
         getRecord();
     }
+
+    private void deleteRecord() {
+        Log.d("REST", "Deleting record with id " + recordId);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.DELETE, BASE_URL.concat("/api/record/" + recordId +"/"),
+                null,
+                response -> {
+                    back(null);
+                },
+                errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                String accessToken = getApplicationContext()
+                        .getSharedPreferences("JWT", MODE_PRIVATE)
+                        .getString("access", null);
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(RecordActivity.this).add(jsonObjectRequest);
+    }
+
 
     private void getRecord() {
         Log.d("REST", "Activity intent record id is " + recordId);
@@ -88,7 +132,8 @@ public class RecordActivity extends BaseActivity {
         ((TextView)findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
         ((TextView)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
         ((TextView)findViewById(R.id.shot)).setText(response.getString("insulin_amount"));
-        ((TextView)findViewById(R.id.insulin_name)).setText(response.getJSONObject("insulin").getString("name"));
+        ((TextView)findViewById(R.id.insulin_name)).setText(
+                getStringResource(response.getJSONObject("insulin").getString("name")));
         ((TextView)findViewById(R.id.insulin_name)).setEnabled(false);
         ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));
         ((TextView)findViewById(R.id.bread_string)).setText(response.getString("bread_units"));
@@ -202,7 +247,16 @@ public class RecordActivity extends BaseActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR, hourOfDay);
+                Log.v("REST", "calendar.getTime() before =  " + calendar.getTime());
+                Log.v("REST", "new hour value " + hourOfDay);
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                Log.v("REST", "calendar.getTime() after =  " + calendar.getTime());
+                Log.v("REST", "TIME_FORMAT.format(calendar.getTime()) =  "
+                        + TIME_FORMAT.format(calendar.getTime()));
+                Log.v("REST", "TIME_FORMAT.format(calendar.getTime()) =  "
+                        + TIME_FORMAT.format(calendar.getTime()));
+                Log.v("REST", "TIME_FORMAT.format(calendar.getTime()) =  "
+                        + TIME_FORMAT.format(calendar.getTime()));
                 calendar.set(Calendar.MINUTE, minute);
                 ((EditText)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(calendar.getTime()));
                 date = calendar.getTime();

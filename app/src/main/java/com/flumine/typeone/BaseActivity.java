@@ -116,4 +116,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         return ((TextView)findViewById(id)).getText().toString();
     }
 
+    protected String getStringResource(String s) {
+        int id = getResources().getIdentifier(s, "string", "com.flumine.typeone");
+        return getResources().getString(id);
+    }
+
 }

@@ -35,4 +35,5 @@
     <string name="save">Save</string>
     <string name="time">Time</string>
     <string name="insulin">Insulin</string>
+    <string name="delete_this_record">Delete this record</string>
 </resources>

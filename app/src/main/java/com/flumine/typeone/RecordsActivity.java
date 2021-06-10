@@ -158,6 +158,7 @@ public class RecordsActivity extends BaseActivity {
                 ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
                 ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
                 ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
+                ((TextView)grid.findViewById(R.id.notes)).setText(record.getString("notes"));
                 JSONObject insulin = record.getJSONObject("insulin");
                 ((TextView)grid.findViewById(R.id.insulin_name))
                         .setText(getStringResource(insulin.getString("name")));

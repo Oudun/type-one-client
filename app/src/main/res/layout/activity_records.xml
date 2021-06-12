@@ -32,6 +32,16 @@
         app:srcCompat="@drawable/ic_baseline_add_24"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/new_long"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:onClick="newLong"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/to_refresh_records_list"
+        app:srcCompat="@drawable/ic_baseline_add_circle_24"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"

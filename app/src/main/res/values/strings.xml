@@ -36,4 +36,8 @@
     <string name="time">Time</string>
     <string name="insulin">Insulin</string>
     <string name="delete_this_record">Delete this record</string>
+    <string name="new_record">New Record</string>
+    <string name="new_long">New Prolongated</string>
+    <string name="edit_long">Prolongated</string>
+    <string name="new_shot">New Shot</string>
 </resources>

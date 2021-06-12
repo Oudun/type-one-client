@@ -1,0 +1,129 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewLongActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="6">
+
+                <!-- row 1 -->
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/date"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/time"/>
+
+                <!-- row 2 -->
+
+                <EditText
+                    android:id="@+id/date_string"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:onClick="setDate"
+                    android:inputType="date"/>
+
+                <EditText
+                    android:id="@+id/time_string"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:onClick="setTime"
+                    android:inputType="time"/>
+
+                <!-- row 3 -->
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/shot"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/insulin"/>
+
+                <EditText
+                    android:id="@+id/shot"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:inputType="number"/>
+
+                <EditText
+                    android:id="@+id/insulin_name"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:inputType="none"/>
+
+            </GridLayout>
+
+            <!-- row 7 -->
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/notes"/>
+
+            <!-- row 8 -->
+
+            <EditText
+                android:id="@+id/notes"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textMultiLine"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:contentDescription="@string/cancel"
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:onClick="back"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="RtlHardcoded" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/submit"
+        android:contentDescription="@string/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:onClick="storeRecord"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_baseline_save_24"
+        tools:ignore="OnClick,RtlHardcoded" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

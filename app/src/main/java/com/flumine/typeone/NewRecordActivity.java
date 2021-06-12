@@ -38,6 +38,7 @@ public class NewRecordActivity extends BaseActivity {
         ((EditText)findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
         ((EditText)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
         ((EditText)findViewById(R.id.insulin_name)).setEnabled(false);
+        ((EditText)findViewById(R.id.insulin_name)).setEnabled(false);
     }
 
     @Override

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10sp"
+    android:columnCount="6"
+    android:background="@color/control_background">
+
+    <TextView
+        android:id="@+id/date_string"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="0.5" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:id="@+id/insulin_name"
+        android:layout_columnWeight="1" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+    <ImageView
+        android:id="@+id/meal_img"
+        android:layout_rowSpan="3"
+        android:layout_height="100sp"
+        android:layout_width="100sp"
+        android:layout_columnWeight="1"/>
+
+    <TextView
+        android:id="@+id/time_string"
+        android:layout_rowSpan="2"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_rowSpan="2"
+        android:layout_columnWeight="0.5" />
+
+    <TextView
+        android:id="@+id/shot_string"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1" />
+
+    <TextView
+        android:id="@+id/gluc_string"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+    <TextView
+        android:id="@+id/bread_string"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="start"/>
+
+    <TextView
+        android:id="@+id/notes"
+        android:textSize="12sp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="3"
+        android:layout_width="160sp"
+        android:layout_columnSpan="3"
+        android:layout_gravity="start"
+        android:maxLines="2"
+        android:singleLine="false"
+        android:ellipsize="end"/>
+
+
+
+</GridLayout>

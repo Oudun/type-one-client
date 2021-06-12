@@ -32,4 +32,8 @@
     <string name="time">Время</string>
     <string name="insulin">Инсулин</string>
     <string name="delete_this_record">Удалить запись</string>
+    <string name="edit_long">Пролонгированый</string>
+    <string name="new_record">Новая запись</string>
+    <string name="new_long">Новый пролонгированый</string>
+    <string name="new_shot">Новый укол</string>
 </resources>

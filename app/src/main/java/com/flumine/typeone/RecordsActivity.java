@@ -172,45 +172,39 @@ public class RecordsActivity extends BaseActivity {
             JSONObject record = (JSONObject) getItem(position);
             Log.v("REST", record.toString());
             try {
+                //if (convertView == null)
+                convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
                 GridLayout grid = (GridLayout) convertView;
                 Date date = DRF_DATE_FORMAT.parse(record.getString("time"));
                 String type = record.getString("type");
-                if (type.equals(LONG_SHOT_TYPE)) {
-                    if (convertView == null)
-                        convertView = activity.getLayoutInflater().inflate(R.layout.long_item, null);
-                    grid.setBackgroundColor(Color.CYAN);
-                    ((TextView)grid.findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
-                    ((TextView)grid.findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
-                    ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
-                    ((TextView)grid.findViewById(R.id.notes)).setText(record.getString("notes"));
-                    JSONObject insulin = record.getJSONObject("insulin");
-                    ((TextView)grid.findViewById(R.id.insulin_name))
-                            .setText(getStringResource(insulin.getString("name")));
-                } else if (type.equals(SHORT_SHOT_TYPE)) {
-                    if (convertView == null)
-                        convertView = activity.getLayoutInflater().inflate(R.layout.item, null);
-                    grid.setBackgroundColor(Color.WHITE);
-                    ((TextView)grid.findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
-                    ((TextView)grid.findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
-                    ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
-                    ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
-                    ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
-                    ((TextView)grid.findViewById(R.id.notes)).setText(record.getString("notes"));
-                    JSONObject insulin = record.getJSONObject("insulin");
-                    ((TextView)grid.findViewById(R.id.insulin_name))
-                            .setText(getStringResource(insulin.getString("name")));
-                    JSONArray photos = record.getJSONArray("photos");
-                    if (photos.length()>0) {
-                        String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
-                        byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                        ((ImageView)grid.findViewById(R.id.meal_img))
-                                .setImageBitmap(bitmap);
-                    }
-                } else {
-                    throw new Exception("Unknown record type");
+                String id = record.getString("id");
+                ((TextView)grid.findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
+                ((TextView)grid.findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
+                ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
+                ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
+                ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
+                ((TextView)grid.findViewById(R.id.notes)).setText(record.getString("notes"));
+                if (LONG_SHOT_TYPE.equals(type)) {
+                    ((TextView)grid.findViewById(R.id.bread_string)).setText("");
+                    ((TextView)grid.findViewById(R.id.gluc_string)).setText("");
+                    grid.setBackgroundColor(getResources().getColor(R.color.control_background));
                 }
-
+                JSONObject insulin = record.getJSONObject("insulin");
+                ((TextView)grid.findViewById(R.id.insulin_name))
+                        .setText(getStringResource(insulin.getString("name")));
+                JSONArray photos = record.getJSONArray("photos");
+                if (photos.length()>0) {
+                    String rawImage = ((JSONObject)photos.get(0)).getString("thumb");
+                    String picId = ((JSONObject)photos.get(0)).getString("id");
+                    byte[] image = Base64.decode(rawImage, Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    ((ImageView)grid.findViewById(R.id.meal_img))
+                            .setImageBitmap(bitmap);
+                    Log.v("RESTPICT", String.format("Setting pic#%s for record #%s (time %s)",
+                            picId, id, record.getString("time")));
+                } else {
+                    Log.v("RESTPICT", String.format("No pics for record #%s", id));
+                }
             } catch (Exception e) {
                 Log.e("REST", e.getLocalizedMessage());
             }

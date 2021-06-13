@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -27,6 +29,45 @@ import java.util.Map;
 public class LongActivity extends BaseRecordActivity {
 
     int recordId;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(getClass().getName(), "onCreateOptionsMenu");
+        getMenuInflater().inflate(R.menu.record_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == (R.id.delete_listed_record)) {
+            deleteRecord();
+            back(null);
+        }
+        return true;
+    }
+
+    private void deleteRecord() {
+        Log.d("REST", "Deleting record with id " + recordId);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.DELETE, BASE_URL.concat("/api/record/" + recordId +"/"),
+                null,
+                response -> {
+                    back(null);
+                },
+                errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                String accessToken = getApplicationContext()
+                        .getSharedPreferences("JWT", MODE_PRIVATE)
+                        .getString("access", null);
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(LongActivity.this).add(jsonObjectRequest);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

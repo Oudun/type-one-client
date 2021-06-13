@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10sp"
-    android:columnCount="6"
-    android:background="@color/control_background">
+    android:columnCount="6">
 
     <TextView
         android:id="@+id/date_string"

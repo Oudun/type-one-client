@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,6 +42,8 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class RecordActivity extends BaseRecordActivity {
+
+    public static final int FILE_OPEN_REQUEST = 42;
 
     int recordId;
 
@@ -182,9 +186,10 @@ public class RecordActivity extends BaseRecordActivity {
         getRecord();
     }
 
+
     public void addPhoto(View view) {
-        Intent intent = new Intent(this, CameraActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        Intent intent = new Intent(this, AddPhotoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         intent.putExtra("RECORD_ID", recordId);
         startActivity(intent);
     }

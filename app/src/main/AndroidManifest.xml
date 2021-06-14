@@ -17,16 +17,20 @@
         android:theme="@style/Theme.TypeOne"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".NewLongActivity"
-            android:label="@string/new_long"/>
-        <activity android:name=".NewRecordActivity"
-            android:label="@string/new_record"/>
+        <activity android:name=".AddPhotoActivity"></activity>
+        <activity
+            android:name=".NewLongActivity"
+            android:label="@string/new_long" />
+        <activity
+            android:name=".NewRecordActivity"
+            android:label="@string/new_record" />
         <activity
             android:name=".PhotoActivity"
             android:label="@string/title_activity_photo"
             android:theme="@style/Theme.TypeOne.NoActionBar" />
-        <activity android:name=".CameraActivity"
-            android:label="@string/new_shot"/>
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/new_shot" />
         <activity
             android:name=".Camera2BasicFragment"
             android:label="@string/foto" />
@@ -44,6 +48,7 @@
             android:label="@string/title_records">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

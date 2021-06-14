@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhotoActivity">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:contentDescription="@string/foto" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:contentDescription="@string/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:onClick="back"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="RtlHardcoded" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:contentDescription="@string/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:onClick="savePhoto"
+        app:srcCompat="@drawable/ic_baseline_save_24"
+        tools:ignore="OnClick,RtlHardcoded" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

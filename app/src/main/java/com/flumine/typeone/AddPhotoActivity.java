@@ -94,7 +94,7 @@ public class AddPhotoActivity extends BaseActivity {
                 Request.Method.POST, BASE_URL.concat("/api/record/" + recordId +"/photos/"), object,
                 response -> {
                     Log.d("REST", response.toString());
-                    Intent intent = new Intent(this, RecordsActivity.class);
+                    Intent intent = new Intent(this, RecordActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     intent.putExtra("RECORD_ID", recordId);
                     startActivity(intent);

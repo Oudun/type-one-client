@@ -43,11 +43,7 @@ import java.util.TimeZone;
 
 public class RecordActivity extends BaseRecordActivity {
 
-    public static final int FILE_OPEN_REQUEST = 42;
-
     int recordId;
-
-    Date date;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

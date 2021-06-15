@@ -26,9 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewRecordActivity extends BaseActivity {
-
-    Date date;
+public class NewRecordActivity extends BaseRecordActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,54 +84,6 @@ public class NewRecordActivity extends BaseActivity {
 
         Volley.newRequestQueue(NewRecordActivity.this).add(jsonObjectRequest);
 
-    }
-
-    public void back(View view) {
-        Intent intent = new Intent(this, RecordsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        startActivity(intent);
-    }
-
-    TimePickerDialog timePickerDialog;
-
-    public void setTime(View view) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-                ((EditText)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(calendar.getTime()));
-                date = calendar.getTime();
-            }
-        }, hour, minute, true);
-        timePickerDialog.show();
-    }
-
-    DatePickerDialog datePickerDialog;
-
-    public void setDate(View view) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                ((EditText)findViewById(R.id.date_string)).setText(DATE_FORMAT.format(calendar.getTime()));
-                date = calendar.getTime();
-            }
-        }, year, month, day);
-        datePickerDialog.show();
     }
 
 }

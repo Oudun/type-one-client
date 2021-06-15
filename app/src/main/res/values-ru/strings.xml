@@ -14,7 +14,7 @@
     <string name="photo">Фото</string>
     <string name="notes">Заметки</string>
     <string name="date">Дата</string>
-    <string name="shot">Укол</string>
+    <string name="shot">Укол, ед.</string>
     <string name="title_activity_main2"> </string>
     <string name="next">Следующая</string>
     <string name="previous">Предыдущая</string>

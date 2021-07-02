@@ -11,7 +11,7 @@
         android:id="@+id/photo"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:contentDescription="@string/foto" />
+        android:contentDescription="@string/meal_photo" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:contentDescription="@string/login"

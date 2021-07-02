@@ -1,39 +1,30 @@
 <resources>
     <string name="app_name">TypeOne</string>
+    <string name="login">Вход</string>
     <string name="username">Имя</string>
     <string name="password">Пароль</string>
+
     <string name="title_records">Записи</string>
-    <string name="title_login">Вход</string>
     <string name="to_refresh_records_list">обновить записи</string>
-    <string name="login">Вход</string>
+    <string name="title_new_record">Новая запись</string>
+    <string name="title_new_long">Новый пролонгированый</string>
+    <string name="add_record">Добавить запись</string>
+
+    <string name="record">Запись</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
     <string name="apidra">Апидра</string>
     <string name="tujeo">Туджео</string>
     <string name="sugar">Сахар</string>
     <string name="bread_unit">ХЕ</string>
     <string name="meal_photo">Фото</string>
-    <string name="photo">Фото</string>
     <string name="notes">Заметки</string>
-    <string name="date">Дата</string>
     <string name="shot">Укол, ед.</string>
-    <string name="title_activity_main2"> </string>
-    <string name="next">Следующая</string>
-    <string name="previous">Предыдущая</string>
-    <string name="record">Запись</string>
-    <string name="foto">Фото</string>
-    <string name="picture">Фото</string>
-    <string name="description_info">Инфо</string>
-    <string name="request_permission">Требуется разрешение</string>
-    <string name="camera_error">Устройство не поддерживается</string>
-    <string name="intro_message">I</string>
-    <string name="title_activity_photo">Фото</string>
     <string name="cancel">Отмена</string>
-    <string name="add_record">Добавить запись</string>
     <string name="save">Сохранить</string>
-    <string name="time">Время</string>
     <string name="insulin">Инсулин</string>
     <string name="delete_this_record">Удалить запись</string>
+
     <string name="edit_long">Пролонгированый</string>
-    <string name="new_record">Новая запись</string>
-    <string name="new_long">Новый пролонгированый</string>
-    <string name="new_shot">Новый укол</string>
+
 </resources>

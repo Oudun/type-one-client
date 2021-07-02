@@ -1,43 +1,33 @@
 <resources>
     <string name="app_name">TypeOne</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="title_records">Records</string>
-    <string name="title_login">Login</string>
-    <string name="to_refresh_records_list">to refresh records list</string>
-    <string name="login">Login</string>
-    <string name="apidra">Apidra</string>
-    <string name="tujeo">Tujeo</string>
-    <string name="sugar">Sugar</string>
-    <string name="bread_unit">BU</string>
-    <string name="meal_photo">Meal photo</string>
-    <string name="photo">Photo</string>
-    <string name="notes">Notes</string>
-    <string name="date">Date</string>
-    <string name="shot">Shot</string>
-    <string name="title_activity_main2">MainActivity</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="record">Record</string>
-    <string name="foto">Photo</string>
-    <string name="picture">Picture</string>
-    <string name="description_info">Info</string>
-    <string name="request_permission">This sample needs camera permission.</string>
-    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="intro_message">I</string>
-    <string name="title_activity_photo">PhotoActivity</string>
-    <string name="cancel">Cancel</string>
-    <string name="add_record">Add record</string>
-    <string name="save">Save</string>
-    <string name="time">Time</string>
-    <string name="insulin">Insulin</string>
-    <string name="delete_this_record">Delete this record</string>
-    <string name="new_record">New Record</string>
-    <string name="new_long">New Prolongated</string>
-    <string name="edit_long">Prolongated</string>
-    <string name="new_shot">New Shot</string>
+    <string name="login">Вход</string>
+    <string name="username">Имя</string>
+    <string name="password">Пароль</string>
+
+    <string name="title_records">Записи</string>
+    <string name="to_refresh_records_list">обновить записи</string>
+    <string name="title_new_record">Новая запись</string>
+    <string name="title_new_long">Новый пролонгированый</string>
+    <string name="add_record">Добавить запись</string>
+
+    <string name="record">Запись</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="apidra">Апидра</string>
+    <string name="tujeo">Туджео</string>
+    <string name="sugar">Сахар</string>
+    <string name="bread_unit">ХЕ</string>
+    <string name="meal_photo">Фото</string>
+    <string name="notes">Заметки</string>
+    <string name="shot">Укол, ед.</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="insulin">Инсулин</string>
+    <string name="delete_this_record">Удалить запись</string>
+
+    <string name="edit_long">Пролонгированый</string>
+    <string name="title_login">Sign in</string>
+    <string name="title_photo">Photo</string>
+    <string name="title_new_photo">New photo</string>
+
 </resources>

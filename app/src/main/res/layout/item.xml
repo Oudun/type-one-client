@@ -84,9 +84,6 @@
         android:layout_gravity="start"
         android:maxLines="2"
         android:singleLine="false"
-        android:text="My eyese have seen the glory and the coming of the Lord"
         android:ellipsize="end"/>
-
-
 
 </GridLayout>

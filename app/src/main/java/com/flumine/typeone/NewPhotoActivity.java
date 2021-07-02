@@ -1,17 +1,10 @@
 package com.flumine.typeone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -23,12 +16,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddPhotoActivity extends BaseActivity {
+public class NewPhotoActivity extends BaseActivity {
 
     private static final int SELECT_PICTURE = 1;
 
@@ -116,7 +108,7 @@ public class AddPhotoActivity extends BaseActivity {
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         jsonObjectRequest.setRetryPolicy(policy);
 
-        Volley.newRequestQueue(AddPhotoActivity.this).add(jsonObjectRequest);
+        Volley.newRequestQueue(NewPhotoActivity.this).add(jsonObjectRequest);
 
     }
 

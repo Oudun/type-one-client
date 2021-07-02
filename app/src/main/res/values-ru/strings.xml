@@ -3,13 +3,11 @@
     <string name="login">Вход</string>
     <string name="username">Имя</string>
     <string name="password">Пароль</string>
-
     <string name="title_records">Записи</string>
     <string name="to_refresh_records_list">обновить записи</string>
     <string name="title_new_record">Новая запись</string>
     <string name="title_new_long">Новый пролонгированый</string>
     <string name="add_record">Добавить запись</string>
-
     <string name="record">Запись</string>
     <string name="date">Дата</string>
     <string name="time">Время</string>
@@ -24,7 +22,10 @@
     <string name="save">Сохранить</string>
     <string name="insulin">Инсулин</string>
     <string name="delete_this_record">Удалить запись</string>
-
     <string name="edit_long">Пролонгированый</string>
-
+    <string name="title_login">Вход</string>
+    <string name="title_photo">Фото</string>
+    <string name="title_new_photo">Новое Фото</string>
+    <string name="logout">Выйти</string>
+    <string name="version">Версия</string>
 </resources>

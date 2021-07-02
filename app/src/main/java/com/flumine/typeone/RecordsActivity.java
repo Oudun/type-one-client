@@ -1,55 +1,41 @@
 package com.flumine.typeone;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import android.util.Base64;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.flumine.typeone.BuildConfig;
 
 public class RecordsActivity extends BaseActivity {
 
@@ -58,6 +44,39 @@ public class RecordsActivity extends BaseActivity {
     private static final String LONG_SHOT_TYPE = "1";
 
     private static final String SHORT_SHOT_TYPE = "0";
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(getClass().getName(), "onCreateOptionsMenu");
+        getMenuInflater().inflate(R.menu.records_menu, menu);
+        menu.findItem(R.id.version).setIcon(R.drawable.ic_baseline_info_24);
+        menu.findItem(R.id.logout).setIcon(R.drawable.ic_baseline_login_24);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == (R.id.logout)) {
+            logout();
+        }
+        if (item.getItemId() == R.id.version) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RecordsActivity.this);
+            builder.setTitle(R.string.app_name)
+                    .setCancelable(false)
+                    .setMessage(BuildConfig.GitHash)
+                    .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.setCanceledOnTouchOutside(true);
+            alert.show();
+
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +110,17 @@ public class RecordsActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         getRecords();
+    }
+
+    private void logout() {
+        Log.d("REST", "Logging out");
+        SharedPreferences pref =
+                getApplicationContext().getSharedPreferences("JWT", MODE_PRIVATE);
+        pref.edit().remove("access").apply();
+        pref.edit().remove("refresh").apply();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 
     private void getRecords() {

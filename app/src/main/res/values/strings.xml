@@ -1,33 +1,31 @@
 <resources>
     <string name="app_name">TypeOne</string>
-    <string name="login">Вход</string>
-    <string name="username">Имя</string>
-    <string name="password">Пароль</string>
-
-    <string name="title_records">Записи</string>
-    <string name="to_refresh_records_list">обновить записи</string>
-    <string name="title_new_record">Новая запись</string>
-    <string name="title_new_long">Новый пролонгированый</string>
-    <string name="add_record">Добавить запись</string>
-
-    <string name="record">Запись</string>
-    <string name="date">Дата</string>
-    <string name="time">Время</string>
-    <string name="apidra">Апидра</string>
-    <string name="tujeo">Туджео</string>
-    <string name="sugar">Сахар</string>
-    <string name="bread_unit">ХЕ</string>
-    <string name="meal_photo">Фото</string>
-    <string name="notes">Заметки</string>
-    <string name="shot">Укол, ед.</string>
-    <string name="cancel">Отмена</string>
-    <string name="save">Сохранить</string>
-    <string name="insulin">Инсулин</string>
-    <string name="delete_this_record">Удалить запись</string>
-
-    <string name="edit_long">Пролонгированый</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="title_records">Records</string>
+    <string name="to_refresh_records_list">refresh records</string>
+    <string name="title_new_record">New Record</string>
+    <string name="title_new_long">New Prolongaged</string>
+    <string name="add_record">Add Record</string>
+    <string name="record">Record</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="apidra">Apidra</string>
+    <string name="tujeo">Tujeo</string>
+    <string name="sugar">Glucose</string>
+    <string name="bread_unit">BU</string>
+    <string name="meal_photo">Photo</string>
+    <string name="notes">Notes</string>
+    <string name="shot">Shot, units</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="insulin">Insulin</string>
+    <string name="delete_this_record">Delete record</string>
+    <string name="edit_long">Prolongated</string>
     <string name="title_login">Sign in</string>
     <string name="title_photo">Photo</string>
     <string name="title_new_photo">New photo</string>
-
+    <string name="logout">Logout</string>
+    <string name="version">Version</string>
 </resources>

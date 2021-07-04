@@ -124,6 +124,10 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void getRecords() {
+
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.records).setVisibility(View.GONE);
+
         Log.d("REST", "Getting records");
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.GET, BASE_URL.concat("/api/records/"), null,
@@ -135,6 +139,9 @@ public class RecordsActivity extends BaseActivity {
                                 new JSONAdapter(RecordsActivity.this, jarray));
                     } catch (Exception e) {
                         Log.e("REST", e.getMessage());
+                    } finally {
+                        findViewById(R.id.timer).setVisibility(View.GONE);
+                        findViewById(R.id.records).setVisibility(View.VISIBLE);
                     }
                 },
                 errorListener

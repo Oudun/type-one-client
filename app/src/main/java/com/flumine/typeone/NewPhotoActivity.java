@@ -31,6 +31,7 @@ public class NewPhotoActivity extends BaseActivity {
     ImageView img;
 
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("REST", "NewPhotoActivity.onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
         img = findViewById(R.id.photo);
@@ -43,12 +44,14 @@ public class NewPhotoActivity extends BaseActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        Log.d("REST", "NewPhotoActivity.onNewIntent");
         super.onNewIntent(intent);
         recordId = intent.getIntExtra("RECORD_ID", -1);
         Log.d("REST", "New intent record id is " + intent.getIntExtra("RECORD_ID", -1));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("REST", "NewPhotoActivity.onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
@@ -72,12 +75,19 @@ public class NewPhotoActivity extends BaseActivity {
 
     public void savePhoto(View view) {
 
+        Log.d("REST", "NewPhotoActivity.savePhoto");
+
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.photo).setVisibility(View.GONE);
+
         byte[] encoded = android.util.Base64.encode(bytes, android.util.Base64.DEFAULT);
         Log.d("REST", "Encoded image is " + new String(encoded));
         JSONObject object = new JSONObject();
 
         try {
+            Log.v("REST", "Start building image string");
             object.put("data", new String(encoded));
+            Log.v("REST", "End building image string");
         } catch (Exception e) {
             Log.e("REST", e.getMessage());
         }

@@ -32,6 +32,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login(View view) throws Exception {
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout).setVisibility(View.GONE);
         Log.e("REST", "LoginForm login");
         JSONObject object = new JSONObject();
         object.put("username", ((TextView) findViewById(R.id.username)).getText());
@@ -46,13 +48,18 @@ public class LoginActivity extends BaseActivity {
                         pref.edit().putString("refresh", response.getString("refresh")).apply();
                         showRecords();
                     } catch (Exception e) {
+                        findViewById(R.id.timer).setVisibility(View.GONE);
+                        findViewById(R.id.layout).setVisibility(View.VISIBLE);
                         Log.e("REST", e.getMessage());
                     }
                 },
-                error -> {Log.e("REST", error.toString());}
+                error -> {
+                    findViewById(R.id.timer).setVisibility(View.GONE);
+                    findViewById(R.id.layout).setVisibility(View.VISIBLE);
+                    Log.e("REST", error.toString());
+                }
         );
         Volley.newRequestQueue(getApplicationContext()).add(jsonObjectRequest);
-
     }
 
     private void showRecords() {

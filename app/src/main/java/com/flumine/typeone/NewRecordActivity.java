@@ -1,17 +1,9 @@
 package com.flumine.typeone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -19,9 +11,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +24,8 @@ public class NewRecordActivity extends BaseRecordActivity {
         date = new Date();
         ((EditText)findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
         ((EditText)findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
-        ((EditText)findViewById(R.id.insulin_name)).setEnabled(false);
-        ((EditText)findViewById(R.id.insulin_name)).setEnabled(false);
+        findViewById(R.id.insulin_name).setEnabled(false);
+        findViewById(R.id.insulin_name).setEnabled(false);
     }
 
     @Override
@@ -46,6 +35,9 @@ public class NewRecordActivity extends BaseRecordActivity {
     }
 
     public void storeRecord(View view) throws Exception {
+
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout).setVisibility(View.GONE);
 
         JSONObject record = new JSONObject();
 
@@ -66,6 +58,8 @@ public class NewRecordActivity extends BaseRecordActivity {
                         Log.e("REST", "Update record response is " + response.toString());
                         back(view);
                     } catch (Exception e) {
+                        findViewById(R.id.timer).setVisibility(View.GONE);
+                        findViewById(R.id.layout).setVisibility(View.VISIBLE);
                         Log.e("REST", e.getMessage());
                     }
                 },

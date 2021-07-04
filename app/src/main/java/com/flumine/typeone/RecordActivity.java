@@ -85,6 +85,8 @@ public class RecordActivity extends BaseRecordActivity {
 
 
     private void getRecord() {
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout).setVisibility(View.GONE);
         Log.d("REST", "Activity intent record id is " + recordId);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/"),
@@ -183,6 +185,9 @@ public class RecordActivity extends BaseRecordActivity {
 
     public void storeRecord(View view) throws Exception {
 
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout).setVisibility(View.GONE);
+
         JSONObject record = new JSONObject();
 
         record.put("id", recordId);
@@ -203,6 +208,8 @@ public class RecordActivity extends BaseRecordActivity {
                     Log.e("REST", "Update record response is " + response.toString());
                     back(view);
                 } catch (Exception e) {
+                    findViewById(R.id.timer).setVisibility(View.GONE);
+                    findViewById(R.id.layout).setVisibility(View.VISIBLE);
                     Log.e("REST", e.getMessage());
                 }
             },

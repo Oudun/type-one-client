@@ -32,6 +32,9 @@ public class NewLongActivity extends BaseRecordActivity {
 
     public void storeRecord(View view) throws Exception {
 
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout).setVisibility(View.GONE);
+
         JSONObject record = new JSONObject();
 
         record.put("type", "1");
@@ -50,6 +53,8 @@ public class NewLongActivity extends BaseRecordActivity {
                         back(view);
                     } catch (Exception e) {
                         Log.e("REST", e.getMessage());
+                        findViewById(R.id.timer).setVisibility(View.GONE);
+                        findViewById(R.id.layout).setVisibility(View.VISIBLE);
                     }
                 },
                 errorListener

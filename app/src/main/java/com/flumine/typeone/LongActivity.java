@@ -47,6 +47,8 @@ public class LongActivity extends BaseRecordActivity {
     }
 
     private void deleteRecord() {
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout).setVisibility(View.GONE);
         Log.d("REST", "Deleting record with id " + recordId);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.DELETE, BASE_URL.concat("/api/record/" + recordId +"/"),

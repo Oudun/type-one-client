@@ -43,11 +43,15 @@ public class PhotoActivity extends BaseActivity {
     }
 
     private void getPhoto() {
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.photo).setVisibility(View.GONE);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, BASE_URL.concat("/api/record/" + recordId +"/photo/" + photoId), null,
                 response -> {
                     try {
                         update(response);
+                        findViewById(R.id.timer).setVisibility(View.GONE);
+                        findViewById(R.id.photo).setVisibility(View.VISIBLE);
                     } catch (Exception e) {
                         Log.e("REST", e.getMessage());
                     }
@@ -76,6 +80,8 @@ public class PhotoActivity extends BaseActivity {
     }
 
     private void deletePhoto() {
+        findViewById(R.id.timer).setVisibility(View.VISIBLE);
+        findViewById(R.id.photo).setVisibility(View.GONE);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.DELETE,
                 BASE_URL.concat(String.format("/api/record/%d/photo/%d/", recordId, photoId)),

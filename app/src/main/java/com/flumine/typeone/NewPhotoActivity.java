@@ -1,6 +1,8 @@
 package com.flumine.typeone;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,13 +61,19 @@ public class NewPhotoActivity extends BaseActivity {
                 img.setImageURI(selectedImage);
                 try (InputStream is = getApplicationContext().getContentResolver().openInputStream(selectedImage);
                      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();) {
-                    byte[] buff = new byte[1000];
-                    int ch;
-                    while ((ch = is.read(buff)) > -1) {
-                        byteArrayOutputStream.write(buff, 0, ch);
-                    }
-                    byteArrayOutputStream.flush();
+                    Bitmap originalBitmap = BitmapFactory.decodeStream(is);
+                    Log.v("REST", "Original image size is w:"
+                            + originalBitmap.getWidth() + " x h:" + originalBitmap.getHeight());
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 360,
+                            ((originalBitmap.getHeight() * 360) / originalBitmap.getWidth()),
+                            true);
+                    Log.v("REST", "Scaled image size is w:"
+                            + scaledBitmap.getWidth() + " x h:" + scaledBitmap.getHeight());
+                    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
+                    Log.v("REST", "Compressed to stream " + byteArrayOutputStream);
                     bytes = byteArrayOutputStream.toByteArray();
+                    Log.v("REST", "Compressed file size is " +
+                            (bytes == null ? "null" : bytes.length));
                 } catch (Exception e) {
                     Log.e("REST", "Failed to read " + selectedImage, e);
                 }

@@ -132,8 +132,6 @@ public class LongActivity extends BaseRecordActivity {
 
         LinearLayout photosLayout = (LinearLayout)findViewById(R.id.photos);
 
-        photosLayout.removeAllViews();
-
         JSONArray photos = response.getJSONArray("photos");
         for (int i=0; i < photos.length(); i++) {
             JSONObject photo = (JSONObject)photos.get(i);

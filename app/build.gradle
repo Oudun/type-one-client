@@ -11,6 +11,12 @@ def getGitHash = { ->
     return stdout.toString().trim()
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.test:monitor:1.4.0-alpha06'
+    }
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"

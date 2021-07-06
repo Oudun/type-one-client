@@ -99,6 +99,7 @@
             android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
+            android:longClickable="true"
             android:inputType="numberDecimal"/>
 
     </GridLayout>

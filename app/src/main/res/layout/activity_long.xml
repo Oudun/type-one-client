@@ -7,8 +7,8 @@
     tools:context=".NewLongActivity">
 
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/timer"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -51,7 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:onClick="setDate"
-                    android:inputType="date"/>
+                    android:inputType="date"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/time_string"
@@ -60,7 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:onClick="setTime"
-                    android:inputType="time"/>
+                    android:inputType="time"
+                    android:editable="false"/>
 
                 <!-- row 3 -->
 
@@ -113,7 +115,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:contentDescription="@string/cancel"
-        android:id="@+id/back"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"

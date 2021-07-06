@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class RecordActivity extends BaseRecordActivity {
 
     int recordId;
 
+    EditText breadUnit;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(getClass().getName(), "onCreateOptionsMenu");
@@ -47,10 +50,23 @@ public class RecordActivity extends BaseRecordActivity {
     }
 
     @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         recordId = getIntent().getIntExtra("RECORD_ID", 0);
+        breadUnit = findViewById(R.id.bread_string);
+        breadUnit.setOnLongClickListener(v -> {
+            Intent intent = new Intent(this, MealsActivity.class);
+            intent.putExtra("RECORD_ID", recordId);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            return true;
+        });
         getRecord();
     }
 

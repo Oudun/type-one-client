@@ -3,6 +3,7 @@ package com.flumine.typeone;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,8 +36,8 @@ public class IngredientsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recordId = getIntent().getIntExtra("RECORD_ID", 0);
-        ingredientsList = findViewById(R.id.list);
         setContentView(R.layout.activity_ingredients);
+        ingredientsList = findViewById(R.id.list);
         getIngredients();
     }
 
@@ -79,10 +80,11 @@ public class IngredientsActivity extends BaseActivity {
         Volley.newRequestQueue(IngredientsActivity.this).add(jsonObjectRequest);
     }
 
-    public void back(View view) {
-    }
-
-    public void save(View view) {
+    public void cancel(View view) {
+        Intent intent = new Intent(this, MealsActivity.class);
+        intent.putExtra("RECORD_ID", recordId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        startActivity(intent);
     }
 
     class JSONAdapter extends BaseAdapter implements ListAdapter {
@@ -121,7 +123,6 @@ public class IngredientsActivity extends BaseActivity {
                 double breadUnitsPer100g = ingredient.getDouble("bread_units_per_100g");
                 int gramsInUnit = record.getInt("grams_in_unit");
                 String unitName = record.getJSONObject("unit").getString("name");
-                double quantity = record.getDouble("quantity");
                 String ingredientNameTranslated =  getStringResource(ingredientName);
                 String unitNameTranslated =  getStringResource(unitName);
                 title = String.format(Locale.getDefault(), "%s, %s",

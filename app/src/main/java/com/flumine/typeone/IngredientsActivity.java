@@ -38,6 +38,17 @@ public class IngredientsActivity extends BaseActivity {
         recordId = getIntent().getIntExtra("RECORD_ID", 0);
         setContentView(R.layout.activity_ingredients);
         ingredientsList = findViewById(R.id.list);
+        ingredientsList.setOnItemClickListener((parent, view, position, id) -> {
+            try {
+                Intent intent = new Intent(this, MealActivity.class);
+                intent.putExtra("RECORD_ID", (int)recordId);
+                intent.putExtra("INGREDIENT_ID", (int)id);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e("REST", "Fail to forward to record details", e);
+            }
+        });
         getIngredients();
     }
 

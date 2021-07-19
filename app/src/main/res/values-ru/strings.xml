@@ -28,4 +28,26 @@
     <string name="title_new_photo">Новое Фото</string>
     <string name="logout">Выйти</string>
     <string name="version">Версия</string>
+    <string name="milk">Молоко</string>
+    <string name="delete_this_meal">Удалить блюдо</string>
+    <string name="ray_bread">Черный хлеб</string>
+    <string name="wheat_bread">Белый хлеб</string>
+    <string name="potato_boiled">Картофель вареный</string>
+    <string name="potato_fried">Картофель жареный</string>
+    <string name="spaghetti">Спагетти</string>
+    <string name="buckwheat">Гречка</string>
+    <string name="rice">Рис</string>
+    <string name="butter">Сливочное масло</string>
+    <string name="cheese">Сыр</string>
+    <string name="sausage">Сосиски</string>
+    <string name="burger">Котлета</string>
+    <string name="pork_boiled">Свинина вареная</string>
+    <string name="pork_fried">Свинина жареная</string>
+    <string name="beef_boiled">Говядина вареная</string>
+    <string name="beef_fried">Говядина жареная</string>
+    <string name="chicken_fried">Курица вареная</string>
+    <string name="chicken_boiled">Курица вареная</string>
+    <string name="egg">Яйцо</string>
+    <string name="omelette">Омлет</string>
+    <string name="gramm">грамм</string>
 </resources>

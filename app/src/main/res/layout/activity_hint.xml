@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MealActivity">
+    tools:context=".HintActivity">
 
     <ProgressBar
         android:visibility="gone"
@@ -30,31 +30,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Ingredient"/>
-
-            <TextView
-                android:id="@+id/ingredient_name"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Unit"/>
-
-            <TextView
-                android:id="@+id/unit_name"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Quantity"/>
+                android:text="Grams in hint"/>
 
             <EditText
                 android:id="@+id/quantity_value"
@@ -71,30 +47,6 @@
 
         </GridLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/hints"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="5sp"-->
-<!--                android:orientation="vertical"-->
-<!--                android:scrollbars="vertical"/>-->
-
-            <RadioGroup
-                android:id="@+id/hints"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom ="50sp"
-                android:orientation="vertical"
-                android:scrollbars="vertical"
-                android:background="#ffeeee">
-            </RadioGroup>
-
-        </ScrollView>
-
     </LinearLayout>
 
 
@@ -104,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:onClick="back"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="RtlHardcoded" />
@@ -115,9 +66,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:onClick="addHint"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_baseline_set_meal_24"
+        app:srcCompat="@drawable/ic_baseline_add_a_photo_24"
         tools:ignore="RtlHardcoded" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -126,7 +76,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:onClick="store"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_baseline_save_24"
         tools:ignore="RtlHardcoded" />

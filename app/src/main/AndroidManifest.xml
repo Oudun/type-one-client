@@ -17,15 +17,16 @@
         android:theme="@style/Theme.TypeOne"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".HintActivity"></activity>
         <activity
             android:name=".IngredientsActivity"
-            android:label="Ingredients"/>
+            android:label="Ingredients" />
         <activity
             android:name=".MealActivity"
-            android:label="Meal"/>
+            android:label="Meal" />
         <activity
             android:name=".MealsActivity"
-            android:label="Meals"/>
+            android:label="Meals" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_login" />

@@ -42,13 +42,21 @@ public class IngredientsActivity extends BaseActivity {
             try {
                 Intent intent = new Intent(this, MealActivity.class);
                 intent.putExtra("RECORD_ID", (int)recordId);
-                intent.putExtra("INGREDIENT_ID", (int)id);
+                intent.putExtra("INGREDIENT_UNIT_ID", (int)id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e("REST", "Fail to forward to record details", e);
             }
         });
+        getIngredients();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        recordId = intent.getIntExtra("RECORD_ID", -1);
+        Log.d("REST", "New intent record id is " + intent.getIntExtra("RECORD_ID", -1));
         getIngredients();
     }
 

@@ -28,4 +28,27 @@
     <string name="title_new_photo">New photo</string>
     <string name="logout">Logout</string>
     <string name="version">Version</string>
+    <string name="delete_this_meal">Delete meal</string>
+    <string name="milk">Milk</string>
+    <string name="ray_bread">Ray bread</string>
+    <string name="wheat_bread">Wheat bread</string>
+    <string name="potato_boiled">Potato boiled</string>
+    <string name="potato_fried">Potato fried</string>
+    <string name="spaghetti">Spaghetti</string>
+    <string name="buckwheat">Buckweat</string>
+    <string name="rice">Rice</string>
+    <string name="butter">Butter</string>
+    <string name="cheese">Butter</string>
+    <string name="sausage">Sausage</string>
+    <string name="burger">Burger</string>
+    <string name="pork_boiled">Pork boiled</string>
+    <string name="pork_fried">Pork fried</string>
+    <string name="beef_boiled">Beef boiled</string>
+    <string name="beef_fried">Beef fried</string>
+    <string name="chicken_boiled">Chicken boiled</string>
+    <string name="chicken_fried">Chicken fried</string>
+    <string name="egg">Egg</string>
+    <string name="omelette">Omelette</string>
+    <string name="gramm">gramm</string>
+    <string name="hint_photo">Hint photo</string>
 </resources>

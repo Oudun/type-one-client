@@ -3,6 +3,7 @@ package com.flumine.typeone;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class RecordActivity extends BaseRecordActivity {
@@ -62,6 +64,7 @@ public class RecordActivity extends BaseRecordActivity {
         breadUnit = findViewById(R.id.bread_string);
         breadUnit.setOnLongClickListener(v -> {
             Intent intent = new Intent(this, MealsActivity.class);
+            Log.d("REST", "Getting meals for record id " + recordId);
             intent.putExtra("RECORD_ID", recordId);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
@@ -140,7 +143,17 @@ public class RecordActivity extends BaseRecordActivity {
                 getStringResource(response.getJSONObject("insulin").getString("name")));
         ((TextView)findViewById(R.id.insulin_name)).setEnabled(false);
         ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));
-        ((TextView)findViewById(R.id.bread_string)).setText(response.getString("bread_units"));
+        if (response.getDouble("calculated_bread_units") == 0) {
+            ((TextView)findViewById(R.id.bread_string)).setText(String.format(Locale.getDefault(),
+                    "%.1f", response.getDouble("bread_units")));
+            if (response.getDouble("bread_units") != 0) {
+                //todo
+                findViewById(R.id.bread_string).setBackgroundColor(Color.rgb(255, 255, 0));
+            }
+        } else {
+            ((TextView)findViewById(R.id.bread_string)).setText(String.format(Locale.getDefault(),
+                    "%.1f", response.getDouble("calculated_bread_units")));
+        }
         ((TextView)findViewById(R.id.notes)).setText(response.getString("notes"));
 
         LinearLayout photosLayout = (LinearLayout)findViewById(R.id.photos);

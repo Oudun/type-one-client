@@ -33,6 +33,7 @@ import android.util.Base64;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import com.flumine.typeone.BuildConfig;
@@ -217,7 +218,8 @@ public class RecordsActivity extends BaseActivity {
                 String id = record.getString("id");
                 ((TextView)grid.findViewById(R.id.date_string)).setText(DATE_FORMAT.format(date));
                 ((TextView)grid.findViewById(R.id.time_string)).setText(TIME_FORMAT.format(date));
-                ((TextView)grid.findViewById(R.id.bread_string)).setText(record.getString("bread_units"));
+                ((TextView)grid.findViewById(R.id.bread_string)).setText(String.format(Locale.getDefault(),
+                        "%.1f", record.getDouble("bread_units")));
                 ((TextView)grid.findViewById(R.id.shot_string)).setText(record.getString("insulin_amount"));
                 ((TextView)grid.findViewById(R.id.gluc_string)).setText(record.getString("glucose_level"));
                 ((TextView)grid.findViewById(R.id.notes)).setText(record.getString("notes"));

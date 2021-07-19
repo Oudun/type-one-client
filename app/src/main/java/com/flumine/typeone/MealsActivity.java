@@ -46,15 +46,32 @@ public class MealsActivity extends BaseActivity {
         mealsView = findViewById(R.id.meals);
         mealsView.setOnItemClickListener((parent, view, position, id) -> {
             try {
+                JSONObject meal = (JSONObject) mealsView.getAdapter().getItem(position);
+                int mealId = meal.getInt("id");
+                int ingredientUnitId = meal.getJSONObject("ingredient_unit").getInt("id");
+                double quantity = meal.getDouble("quantity");
                 Intent intent = new Intent(this, MealActivity.class);
                 intent.putExtra("RECORD_ID", (int)recordId);
-                intent.putExtra("MEAL_ID", (int)id);
+                intent.putExtra("INGREDIENT_UNIT_ID", ingredientUnitId);
+                intent.putExtra("MEAL_ID", mealId);
+                intent.putExtra("QUANTITY", quantity);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Log.d("REST",
+                        String.format("Sending intent %s is RECORD_ID:%d INGREDIENT_UNIT_ID:%d MEAL_ID:%d QUANTITY:%f",
+                                intent.hashCode(), recordId, ingredientUnitId, mealId, quantity));
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e("REST", "Fail to forward to record details", e);
             }
         });
+        getMeals();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        recordId = intent.getIntExtra("RECORD_ID", -1);
+        Log.d("REST", "New intent record id is " + intent.getIntExtra("RECORD_ID", -1));
         getMeals();
     }
 
@@ -157,8 +174,8 @@ public class MealsActivity extends BaseActivity {
                 int gramsInUnit = ingredientUnit.getInt("grams_in_unit");
                 String unitName = ingredientUnit.getJSONObject("unit").getString("name");
                 double quantity = record.getDouble("quantity");
-                String ingredientNameTranslated =  getStringResource(ingredientName);
-                String unitNameTranslated =  getStringResource(unitName);
+                String ingredientNameTranslated = getStringResource(ingredientName);
+                String unitNameTranslated = getStringResource(unitName);
                 title = String.format(Locale.getDefault(), "%s, %4.1f %s",
                         ingredientNameTranslated, quantity, unitNameTranslated);
             } catch (Exception e) {

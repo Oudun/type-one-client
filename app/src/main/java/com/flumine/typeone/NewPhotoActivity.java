@@ -125,9 +125,14 @@ public class NewPhotoActivity extends BaseActivity {
         int socketTimeout = 300000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         jsonObjectRequest.setRetryPolicy(policy);
-
         Volley.newRequestQueue(NewPhotoActivity.this).add(jsonObjectRequest);
+    }
 
+    public void back(View view) {
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("RECORD_ID", recordId);
+        startActivity(intent);
     }
 
 }

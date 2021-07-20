@@ -40,9 +40,12 @@ public class IngredientsActivity extends BaseActivity {
         ingredientsList = findViewById(R.id.list);
         ingredientsList.setOnItemClickListener((parent, view, position, id) -> {
             try {
+                JSONObject ingredientUnit = (JSONObject) ingredientsList.getAdapter().getItem(position);
+                JSONObject ingredient = ingredientUnit.getJSONObject("ingredient");
                 Intent intent = new Intent(this, MealActivity.class);
                 intent.putExtra("RECORD_ID", (int)recordId);
                 intent.putExtra("INGREDIENT_UNIT_ID", (int)id);
+                intent.putExtra("INGREDIENT_ID", ingredient.getInt("id"));
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             } catch (Exception e) {

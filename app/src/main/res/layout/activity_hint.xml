@@ -43,7 +43,13 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Hints"/>
+                android:text="Photo"/>
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/meal_photo" />
 
         </GridLayout>
 
@@ -67,7 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_baseline_add_a_photo_24"
+        android:onClick="deleteHint"
+        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
         tools:ignore="RtlHardcoded" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -76,6 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:onClick="saveHint"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_baseline_save_24"
         tools:ignore="RtlHardcoded" />

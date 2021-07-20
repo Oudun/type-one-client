@@ -80,6 +80,7 @@ public class MealActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         recordId = getIntent().getIntExtra("RECORD_ID", 0);
         ingredientUnitId = getIntent().getIntExtra("INGREDIENT_UNIT_ID", 0);
+        ingredientId = getIntent().getIntExtra("INGREDIENT_ID", 0);
         mealId = getIntent().getIntExtra("MEAL_ID", 0);
         quantity = getIntent().getDoubleExtra("QUANTITY", 0);
         Log.d("REST",
@@ -95,6 +96,7 @@ public class MealActivity extends BaseActivity {
         super.onNewIntent(intent);
         recordId = intent.getIntExtra("RECORD_ID", 0);
         ingredientUnitId = intent.getIntExtra("INGREDIENT_UNIT_ID", 0);
+        ingredientId = getIntent().getIntExtra("INGREDIENT_ID", 0);
         mealId = intent.getIntExtra("MEAL_ID", 0);
         quantity = intent.getDoubleExtra("QUANTITY", 0);
         Log.d("REST",
@@ -289,7 +291,7 @@ public class MealActivity extends BaseActivity {
         intent.putExtra("RECORD_ID", recordId);
         intent.putExtra("MEAL_ID", recordId);
         intent.putExtra("INGREDIENT_UNIT_ID", ingredientUnitId);
-        intent.putExtra("INGREDIENT_ID", ingredientUnitId);
+        intent.putExtra("INGREDIENT_ID", ingredientId);
         startActivity(intent);
     }
 

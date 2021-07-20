@@ -41,18 +41,21 @@ public class MealsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recordId = getIntent().getIntExtra("RECORD_ID", 0);
         setContentView(R.layout.activity_meals);
+        recordId = getIntent().getIntExtra("RECORD_ID", 0);
         mealsView = findViewById(R.id.meals);
         mealsView.setOnItemClickListener((parent, view, position, id) -> {
             try {
                 JSONObject meal = (JSONObject) mealsView.getAdapter().getItem(position);
+                JSONObject ingredientUnit = meal.getJSONObject("ingredient_unit");
+                JSONObject ingredient = ingredientUnit.getJSONObject("ingredient");
                 int mealId = meal.getInt("id");
-                int ingredientUnitId = meal.getJSONObject("ingredient_unit").getInt("id");
+                int ingredientUnitId = ingredientUnit.getInt("id");
                 double quantity = meal.getDouble("quantity");
                 Intent intent = new Intent(this, MealActivity.class);
                 intent.putExtra("RECORD_ID", (int)recordId);
                 intent.putExtra("INGREDIENT_UNIT_ID", ingredientUnitId);
+                intent.putExtra("INGREDIENT_ID", ingredient.getInt("id"));
                 intent.putExtra("MEAL_ID", mealId);
                 intent.putExtra("QUANTITY", quantity);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

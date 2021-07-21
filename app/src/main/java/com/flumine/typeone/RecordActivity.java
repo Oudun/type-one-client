@@ -144,14 +144,14 @@ public class RecordActivity extends BaseRecordActivity {
         ((TextView)findViewById(R.id.insulin_name)).setEnabled(false);
         ((TextView)findViewById(R.id.sugar)).setText(response.getString("glucose_level"));
         if (response.getDouble("calculated_bread_units") == 0) {
-            ((TextView)findViewById(R.id.bread_string)).setText(String.format(Locale.getDefault(),
+            ((TextView)findViewById(R.id.bread_string)).setText(String.format(Locale.US,
                     "%.1f", response.getDouble("bread_units")));
             if (response.getDouble("bread_units") != 0) {
                 //todo
                 findViewById(R.id.bread_string).setBackgroundColor(Color.rgb(255, 255, 0));
             }
         } else {
-            ((TextView)findViewById(R.id.bread_string)).setText(String.format(Locale.getDefault(),
+            ((TextView)findViewById(R.id.bread_string)).setText(String.format(Locale.US,
                     "%.1f", response.getDouble("calculated_bread_units")));
         }
         ((TextView)findViewById(R.id.notes)).setText(response.getString("notes"));

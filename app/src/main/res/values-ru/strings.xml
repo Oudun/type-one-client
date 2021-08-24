@@ -50,4 +50,5 @@
     <string name="egg">Яйцо</string>
     <string name="omelette">Омлет</string>
     <string name="gramm">грамм</string>
+    <string name="hint_photo">Подсказка</string>
 </resources>

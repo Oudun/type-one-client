@@ -19,7 +19,8 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-
+    - name: Install gradle
+      run: sudo apt-get install gradle
     - name: Check gradlew
       run: gradlew
     - name: Grant execute permission for gradlew

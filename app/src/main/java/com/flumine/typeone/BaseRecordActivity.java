@@ -29,6 +29,7 @@ public class BaseRecordActivity extends BaseActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
                 Log.v("REST", "calendar.getTime() before =  " + calendar.getTime());
                 Log.v("REST", "new hour value " + hourOfDay);
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -57,6 +58,7 @@ public class BaseRecordActivity extends BaseActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);

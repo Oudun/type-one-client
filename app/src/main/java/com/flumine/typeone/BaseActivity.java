@@ -36,7 +36,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //protected static final String BASE_URL = "http://192.168.113.101:9000";
     //protected static final String BASE_URL = "http://192.168.0.191:8000";
-    protected static final String BASE_URL = "https://type-one.herokuapp.com";
+    //protected static final String BASE_URL = "https://type-one.herokuapp.com";
+    protected static final String BASE_URL = "http://type-one.ru";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
